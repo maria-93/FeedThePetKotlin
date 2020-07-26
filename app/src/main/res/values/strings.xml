@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Feed The Pet</string>
+    <string name="pet_fed">Питомец накормлен</string>
+    <string name="time_before_feeding">Время до кормления:</string>
+    <string name="fake_time">01:32</string>
+
+    <string name="pet_name_hint">Введите имя питомца</string>
+    <string name="button_pet_fed">Питомец накормлен</string>
+    
+    <string name="notification_body">Настало время покормить питомца</string>
+    <string name="notification_title">Покорми питомца!</string>
+
+
+    <string name="database_name">pet_database</string>
+    <string name="button_cancel_alarm">Отмена будильника</string>
+    <string name="toast_name_is_empty">Имя питомца не может быть пустым</string>
+
+
+</resources>

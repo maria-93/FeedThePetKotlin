@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item
+        type="id"
+        name="petdata_key" />
+    <item
+        type="id"
+        name="thread_key"/>
+</resources>

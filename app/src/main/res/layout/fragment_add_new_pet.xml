@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="petData"
+            type="ru.kesva.feedthepet.domain.model.PetData" />
+
+        <variable
+            name="clickHandler"
+            type="ru.kesva.feedthepet.ui.addnewpetfragment.PetCreationClickHandler" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".ui.addnewpetfragment.AddNewPetFragment">
+
+            <EditText
+                android:id="@+id/et_choose_pet_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:ems="10"
+                android:hint="@string/pet_name_hint"
+                android:imeOptions="actionDone"
+                android:inputType="textCapWords"
+                android:maxLength="80"
+                android:maxLines="1"
+                android:text="@{petData.petName}"
+                app:layout_constraintEnd_toEndOf="@+id/petImage"
+                app:layout_constraintStart_toStartOf="@+id/petImage"
+                app:layout_constraintTop_toBottomOf="@+id/petImage" />
+
+            <ImageView
+                android:id="@+id/petImage"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_margin="8dp"
+                android:background="@android:color/transparent"
+                android:scaleType="center"
+                android:src="@drawable/add_a_photo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/time_picked" />
+
+            <TextView
+                android:id="@+id/tv_choose_time_for_feed"
+                style="@style/TextAppearance.AppCompat.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="Укажите периодичность кормления питомца"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/et_choose_pet_name"
+                app:layout_constraintStart_toStartOf="@+id/et_choose_pet_name"
+                app:layout_constraintTop_toBottomOf="@+id/et_choose_pet_name" />
+
+            <NumberPicker
+                android:id="@+id/number_picker_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_weight="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_choose_time_for_feed" />
+
+            <NumberPicker
+                android:id="@+id/number_picker_days"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="1"
+                app:layout_constraintEnd_toStartOf="@+id/number_picker_hours"
+                app:layout_constraintTop_toTopOf="@+id/number_picker_hours" />
+
+            <NumberPicker
+                android:id="@+id/number_picker_minutes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/number_picker_hours"
+                app:layout_constraintTop_toTopOf="@+id/number_picker_hours"
+                android:focusableInTouchMode="true"
+                android:focusable="true"/>
+
+            <TextView
+                android:id="@+id/tv_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Дни"
+                app:layout_constraintBottom_toTopOf="@+id/number_picker_days"
+                app:layout_constraintEnd_toEndOf="@+id/number_picker_days"
+                app:layout_constraintStart_toStartOf="@+id/number_picker_days" />
+
+            <TextView
+                android:id="@+id/tv_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Часы"
+                app:layout_constraintBottom_toTopOf="@+id/number_picker_hours"
+                app:layout_constraintEnd_toEndOf="@+id/number_picker_hours"
+                app:layout_constraintStart_toStartOf="@+id/number_picker_hours" />
+
+            <TextView
+                android:id="@+id/tv_minute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Минуты"
+                app:layout_constraintBottom_toTopOf="@+id/number_picker_minutes"
+                app:layout_constraintEnd_toEndOf="@+id/number_picker_minutes"
+                app:layout_constraintStart_toStartOf="@+id/number_picker_minutes" />
+
+            <TextView
+                android:id="@+id/time_picked"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Выберите фото питомца"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/button_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Ok"
+                app:layout_constraintEnd_toEndOf="@+id/number_picker_minutes"
+                app:layout_constraintStart_toStartOf="@+id/number_picker_days"
+                app:layout_constraintTop_toBottomOf="@+id/number_picker_hours" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

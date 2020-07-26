@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.bumptech.glide.Glide"/>
+        <variable
+            name="petData"
+            type="ru.kesva.feedthepet.domain.model.PetData" />
+
+        <variable
+            name="adapterClickHandler"
+            type="ru.kesva.feedthepet.ui.startfragment.PetDataAdapter.AdapterClickHandler" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:elevation="2dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
+
+        <TextView
+            android:id="@+id/tv_pet_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="@{petData.petName}"
+            android:textSize="24sp"
+            android:textColor="@color/colorMain"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/petImageRv"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Зябличка" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/tv_time_for_feed"
+            app:layout_constraintStart_toStartOf="@+id/tv_time_for_feed"
+            app:layout_constraintTop_toBottomOf="@+id/tv_time_for_feed">
+
+            <ImageView
+                android:id="@+id/b_pet_fed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:onClick="@{() -> adapterClickHandler.petFedButtonClicked(petData)}"
+                android:src="@drawable/ic_pet_fed" />
+
+            <ImageView
+                android:id="@+id/b_cancel_alarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:onClick="@{()-> adapterClickHandler.cancelAlarmButtonClicked(petData)}"
+                android:src="@drawable/ic_alarm_off" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/petImageRv"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:scaleType="centerCrop"
+            android:src="@color/colorPrimary"
+            app:loadImage="@{petData.petImageURI}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+   <!--     <TextView
+            android:id="@+id/tv_time_for_feed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{petData.remainTime}"
+            android:textSize="22sp"
+            android:textColor="@color/colorMain"
+            app:layout_constraintEnd_toEndOf="@+id/tv_pet_name"
+            app:layout_constraintStart_toStartOf="@+id/tv_pet_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_pet_name"
+            tools:text="@string/fake_time" />-->
+
+        <ir.samanjafari.easycountdowntimer.EasyCountDownTextview
+            android:id="@+id/tv_time_for_feed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{petData.remainTime}"
+            android:textSize="22sp"
+            android:textColor="@color/colorMain"
+            app:layout_constraintEnd_toEndOf="@+id/tv_pet_name"
+            app:layout_constraintStart_toStartOf="@+id/tv_pet_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_pet_name"
+            tools:text="@string/fake_time"/>
+
+        <TextView
+            android:id="@+id/timeForFeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Следующее кормление:"
+            android:textColor="#000000"
+            android:textSize="12sp"
+
+            app:layout_constraintStart_toStartOf="@+id/petImageRv"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+        <TextView
+            android:id="@+id/calendarTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            app:textForNextFeeding="@{petData.calendar}"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/timeForFeed"
+            app:layout_constraintStart_toEndOf="@+id/timeForFeed"
+            app:layout_constraintTop_toTopOf="@+id/timeForFeed"
+            tools:text="00:32"
+            android:visibility="invisible"/>
+        <!--android:text="@{adapterClickHandler.feedPetNextTime(petData.calendar)}"-->
+
+        <ImageView
+            android:id="@+id/iv_edit"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_margin="2dp"
+            android:onClick="@{() -> adapterClickHandler.editButtonClicked(petData)}"
+            android:src="@drawable/edit"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_time_for_feed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintStart_toEndOf="@+id/tv_time_for_feed"
+            app:layout_constraintTop_toBottomOf="@+id/tv_pet_name"
+            app:layout_constraintVertical_bias="1.0" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
+
