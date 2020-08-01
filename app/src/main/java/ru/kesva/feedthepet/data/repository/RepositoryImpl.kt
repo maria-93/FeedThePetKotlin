@@ -40,7 +40,7 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getById(id: Int) {
+    override suspend fun getById(id: Int): PetData {
         TODO("Not yet implemented")
     }
 

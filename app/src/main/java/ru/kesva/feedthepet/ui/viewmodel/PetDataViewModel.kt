@@ -1,10 +1,13 @@
 package ru.kesva.feedthepet.ui.viewmodel
 
+import android.util.Log
+import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import ru.kesva.feedthepet.MyCountDownTimer
 import ru.kesva.feedthepet.data.model.Buffer
 import ru.kesva.feedthepet.data.model.Event
 import ru.kesva.feedthepet.data.model.PetDataAction
@@ -25,7 +28,7 @@ class PetDataViewModel @Inject constructor(
     private val deletePetUseCase: DeletePetUseCase,
     private val petFedUseCase: PetFedUseCase,
     private val repositoryImpl: Repository
-) : ViewModel(), PetDataAdapter.AdapterClickHandler, PetCreationClickHandler{
+) : ViewModel(), PetDataAdapter.AdapterClickHandler, PetCreationClickHandler {
 
     private lateinit var buffer: Buffer
 
@@ -47,15 +50,33 @@ class PetDataViewModel @Inject constructor(
             petData,
             PetDataAction.CREATE_PET
         )
-        _createNewPet.value = Event(Any())
+        _createNewPet.postValue(Event(Any()))
     }
 
-    override fun petFedButtonClicked(petData: PetData) {
-        viewModelScope.launch {
-            petFedUseCase.petFed(petData)
-            _petFedButtonClicked.value = Event(Any())
-        }
+    override fun getBuffer(): Buffer {
+        return buffer
     }
+
+    override fun petFedButtonClicked(
+        petData: PetData,
+        myCountDownTimer: MyCountDownTimer,
+        textView: TextView
+    ) {
+        Log.d("Timer", "petFedButtonClicked: ")
+        var timeInFuture = System.currentTimeMillis() + petData.timeInterval
+        var remainTime = timeInFuture - System.currentTimeMillis()
+        Log.d("Timer", "petFedButtonClicked: животное ${petData.petName} с интервалом $remainTime")
+        myCountDownTimer.start(remainTime)
+
+
+       /* viewModelScope.launch {
+            petFedUseCase.petFed(petData)
+
+        }*/
+        _petFedButtonClicked.value = Event(Any())
+
+    }
+
 
     override fun cancelAlarmButtonClicked(petData: PetData) {
         unregisterAlarmUseCase.unregisterAlarm(petData.id)
@@ -78,26 +99,10 @@ class PetDataViewModel @Inject constructor(
         }
     }
 
-    override fun getBuffer(): Buffer {
-        return buffer
-    }
-
-    fun stopCountDownTimer() {
-        stopTimerUseCase.stopCountDownTimer()
-    }
-
     private fun getNewPet(): PetData {
         val calendar: Calendar = Calendar.getInstance()
         calendar.timeInMillis = 0
-        return PetData(0, "", calendar, 0, "")
-    }
-
-     override fun startTimer(petData: PetData) {
-
-    }
-
-    fun stopTimer() {
-        stopTimerUseCase.stopTimer()
+        return PetData(0, "", 0, "")
     }
 
 

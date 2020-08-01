@@ -8,6 +8,7 @@ import ru.kesva.feedthepet.di.modules.PetDataBindModule
 import ru.kesva.feedthepet.di.modules.PetDatabaseModule
 import ru.kesva.feedthepet.di.modules.RepositoryModule
 import ru.kesva.feedthepet.di.subcomponents.AddNewPetComponent
+import ru.kesva.feedthepet.di.subcomponents.MainActivityComponent
 import ru.kesva.feedthepet.di.subcomponents.StartComponent
 import javax.inject.Singleton
 
@@ -19,6 +20,7 @@ interface AppComponent {
 
     fun startComponent(): StartComponent.Factory
     fun addNewPetComponent(): AddNewPetComponent.Factory
+    fun mainActivityComponent(): MainActivityComponent.Factory
 
     @Component.Factory
     interface Factory {

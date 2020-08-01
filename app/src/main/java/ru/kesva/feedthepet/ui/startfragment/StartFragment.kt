@@ -4,32 +4,28 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ru.kesva.feedthepet.FeedThePetApplication
 import ru.kesva.feedthepet.R
+import ru.kesva.feedthepet.databinding.FragmentStartBinding
 import ru.kesva.feedthepet.di.ViewModelFactory
 import ru.kesva.feedthepet.di.modules.ClickHandlersProvideModule
 import ru.kesva.feedthepet.di.subcomponents.StartComponent
-import ru.kesva.feedthepet.domain.model.PetData
 import ru.kesva.feedthepet.extensions.getViewModel
+import ru.kesva.feedthepet.ui.MainActivity
 import ru.kesva.feedthepet.ui.viewmodel.PetDataViewModel
 import javax.inject.Inject
 
 /**
- * A simple [Fragment] subclass.
+ *
  */
 class StartFragment : Fragment() {
     private lateinit var component: StartComponent
     private lateinit var navController: NavController
-    private lateinit var fab: FloatingActionButton
-    private lateinit var recyclerView: RecyclerView
+
 
     @Inject
     lateinit var adapter: PetDataAdapter
@@ -40,40 +36,26 @@ class StartFragment : Fragment() {
     @Inject
     lateinit var viewModel: PetDataViewModel
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        injectDependencies()
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_start, container, false)
+        val binding = FragmentStartBinding.inflate(inflater)
+        binding.rvPetData.adapter = adapter
+        binding.viewModel = viewModel
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        injectDependencies()
         navController = NavHostFragment.findNavController(this)
-        fab = view.findViewById(R.id.fab_button)
-        recyclerView = view.findViewById(R.id.rv_pet_data)
-        recyclerView.layoutManager = LinearLayoutManager(view.context)
-        recyclerView.adapter = adapter
-        val listener: RecyclerView.OnChildAttachStateChangeListener =
-            object : RecyclerView.OnChildAttachStateChangeListener {
-                override fun onChildViewAttachedToWindow(view: View) {
-                    val petData = view.getTag(R.id.petdata_key) as PetData
-                    viewModel.startTimer(petData)
-                }
-
-                override fun onChildViewDetachedFromWindow(view: View) {
-                    viewModel.stopTimer()
-                }
-
-
-            }
-        recyclerView.addOnChildAttachStateChangeListener(listener)
         subscribeToEvents()
-        fab.setOnClickListener {
-            viewModel.createPet()
-        }
-
     }
 
     private fun subscribeToEvents() {
@@ -95,26 +77,22 @@ class StartFragment : Fragment() {
             })
 
             petFedButtonClicked.observe(viewLifecycleOwner, Observer {
-                val textView: TextView = requireView().findViewById(R.id.calendarTime)
-                textView.visibility = View.VISIBLE
+        //        val textView: TextView = requireView().findViewById(R.id.tv_time_for_next_feeding)
+          //     textView.visibility = View.VISIBLE
             })
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        viewModel.stopCountDownTimer()
-    }
 
     private fun injectDependencies() {
         component =
             (requireContext().applicationContext as FeedThePetApplication).appComponent.startComponent()
                 .create(
-                    ClickHandlersProvideModule(this)
+                    ClickHandlersProvideModule(requireActivity() as MainActivity)
                 )
         component.provideDependenciesFor(this)
 
-        viewModel = getViewModel(factory)
+        viewModel = getViewModel(factory, requireActivity())
     }
 
 }

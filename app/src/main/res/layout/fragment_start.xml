@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+    <variable
+        name="viewModel"
+        type="ru.kesva.feedthepet.ui.viewmodel.PetDataViewModel" />
+    </data>
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,7 +18,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_pet_data"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_button"
@@ -18,6 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:src="@drawable/add_for_fab"
+        android:onClick="@{() -> viewModel.createPet()}"
         android:layout_margin="16dp"/>
 
 </FrameLayout>
+</layout>

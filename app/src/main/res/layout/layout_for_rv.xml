@@ -14,6 +14,10 @@
             name="adapterClickHandler"
             type="ru.kesva.feedthepet.ui.startfragment.PetDataAdapter.AdapterClickHandler" />
 
+        <variable
+            name="timer"
+            type="ru.kesva.feedthepet.MyCountDownTimer" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -43,16 +47,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/tv_time_for_feed"
-            app:layout_constraintStart_toStartOf="@+id/tv_time_for_feed"
-            app:layout_constraintTop_toBottomOf="@+id/tv_time_for_feed">
+            app:layout_constraintEnd_toEndOf="@+id/tvremaintime"
+            app:layout_constraintStart_toStartOf="@+id/tvremaintime"
+            app:layout_constraintTop_toBottomOf="@+id/tvremaintime">
 
             <ImageView
                 android:id="@+id/b_pet_fed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:onClick="@{() -> adapterClickHandler.petFedButtonClicked(petData)}"
+                android:onClick="@{() -> adapterClickHandler.petFedButtonClicked(petData, timer, tvremaintime)}"
                 android:src="@drawable/ic_pet_fed" />
 
             <ImageView
@@ -76,24 +80,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-   <!--     <TextView
-            android:id="@+id/tv_time_for_feed"
+        <TextView
+            android:id="@+id/tvremaintime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{petData.remainTime}"
-            android:textSize="22sp"
-            android:textColor="@color/colorMain"
-            app:layout_constraintEnd_toEndOf="@+id/tv_pet_name"
-            app:layout_constraintStart_toStartOf="@+id/tv_pet_name"
-            app:layout_constraintTop_toBottomOf="@+id/tv_pet_name"
-            tools:text="@string/fake_time" />-->
-
-        <ir.samanjafari.easycountdowntimer.EasyCountDownTextview
-            android:id="@+id/tv_time_for_feed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{petData.remainTime}"
-            android:textSize="22sp"
+            android:textSize="28sp"
             android:textColor="@color/colorMain"
             app:layout_constraintEnd_toEndOf="@+id/tv_pet_name"
             app:layout_constraintStart_toStartOf="@+id/tv_pet_name"
@@ -101,30 +92,28 @@
             tools:text="@string/fake_time"/>
 
         <TextView
-            android:id="@+id/timeForFeed"
+            android:id="@+id/tv_next_feeding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Следующее кормление:"
             android:textColor="#000000"
             android:textSize="12sp"
-
             app:layout_constraintStart_toStartOf="@+id/petImageRv"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-        <TextView
-            android:id="@+id/calendarTime"
+       <!-- <TextView
+            android:id="@+id/tv_time_for_next_feeding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            app:textForNextFeeding="@{petData.calendar}"
+            app:textForNextFeeding="@{petData.timeForNextFeeding}"
             android:textColor="#000000"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/timeForFeed"
-            app:layout_constraintStart_toEndOf="@+id/timeForFeed"
-            app:layout_constraintTop_toTopOf="@+id/timeForFeed"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_next_feeding"
+            app:layout_constraintStart_toEndOf="@+id/tv_next_feeding"
+            app:layout_constraintTop_toTopOf="@+id/tv_next_feeding"
             tools:text="00:32"
-            android:visibility="invisible"/>
-        <!--android:text="@{adapterClickHandler.feedPetNextTime(petData.calendar)}"-->
+            android:visibility="invisible"/>-->
 
         <ImageView
             android:id="@+id/iv_edit"
@@ -133,10 +122,10 @@
             android:layout_margin="2dp"
             android:onClick="@{() -> adapterClickHandler.editButtonClicked(petData)}"
             android:src="@drawable/edit"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_time_for_feed"
+            app:layout_constraintBottom_toBottomOf="@+id/tvremaintime"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.505"
-            app:layout_constraintStart_toEndOf="@+id/tv_time_for_feed"
+            app:layout_constraintStart_toEndOf="@+id/tvremaintime"
             app:layout_constraintTop_toBottomOf="@+id/tv_pet_name"
             app:layout_constraintVertical_bias="1.0" />
 

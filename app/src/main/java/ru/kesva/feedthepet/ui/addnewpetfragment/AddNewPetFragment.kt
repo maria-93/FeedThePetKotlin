@@ -3,12 +3,12 @@ package ru.kesva.feedthepet.ui.addnewpetfragment
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
@@ -18,6 +18,7 @@ import ru.kesva.feedthepet.data.model.Buffer
 import ru.kesva.feedthepet.databinding.FragmentAddNewPetBinding
 import ru.kesva.feedthepet.di.modules.ClickHandlersProvideModule
 import ru.kesva.feedthepet.di.subcomponents.AddNewPetComponent
+import ru.kesva.feedthepet.ui.MainActivity
 import javax.inject.Inject
 
 
@@ -34,33 +35,33 @@ class AddNewPetFragment : Fragment() {
     private lateinit var petName: EditText
     private lateinit var petImage: ImageView
     private lateinit var okButton: Button
+
     @Inject
     lateinit var clickHandler: PetCreationClickHandler
     private lateinit var pickerForMinutes: NumberPicker
     private lateinit var pickerForDays: NumberPicker
     private lateinit var pickerForHours: NumberPicker
+    private lateinit var buffer: Buffer
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        injectDependency()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_add_new_pet,
-            container,
-            false
-        )
+        binding = FragmentAddNewPetBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        injectDependency()
         setUpBinding()
         binding.clickHandler = clickHandler
-        binding.petData = clickHandler.getBuffer().petData
+        buffer = clickHandler.getBuffer()
+        binding.petData = buffer.petData
 
         petName.setOnKeyListener(View.OnKeyListener { view, keyCode, keyEvent ->
             if (keyEvent.action == KeyEvent.ACTION_DOWN &&
@@ -80,6 +81,7 @@ class AddNewPetFragment : Fragment() {
                 val daysInPicker = pickerForDays.value
                 val hoursInPicker = pickerForHours.value
                 val minutesInPicker = pickerForMinutes.value
+                Log.d("Task", "onViewCreated: дни пикера $daysInPicker часы пикера $hoursInPicker минуты пикера $minutesInPicker")
                 val daysInMs = daysToMs(daysInPicker)
                 val hoursInMs = hoursToMs(hoursInPicker)
                 val minutesInMs = minutesToMs(minutesInPicker)
@@ -87,9 +89,11 @@ class AddNewPetFragment : Fragment() {
                 if (daysInPicker == 0 && hoursInPicker == 0 && minutesInPicker == 0) {
                     showToastTimeMustBeAboveZero()
                 } else {
-                    clickHandler.getBuffer().petData.petName = name
-                    val time = getTotalTime(daysInMs, hoursInMs, minutesInMs)
-                    clickHandler.getBuffer().petData.timeInterval = time
+                    buffer.petData.petName = name
+                    var time = getTotalTime(daysInMs, hoursInMs, minutesInMs)
+                    buffer.petData.timeInterval = time
+                    //buffer.petData.timeForNextFeeding = Calendar.getInstance()
+                        //.apply { timeInMillis = System.currentTimeMillis() + time }
                     clickHandler.onOkButtonClicked()
                     val navController =
                         NavHostFragment.findNavController(this)
@@ -117,7 +121,7 @@ class AddNewPetFragment : Fragment() {
                 .load(imageUri)
                 .apply(RequestOptions.circleCropTransform())
                 .into(petImage)
-            clickHandler.getBuffer().petData.petImageURI = imageUri.toString()
+            buffer.petData.petImageURI = imageUri.toString()
         }
     }
 
@@ -173,7 +177,7 @@ class AddNewPetFragment : Fragment() {
         component =
             (requireContext().applicationContext as FeedThePetApplication).appComponent.addNewPetComponent()
                 .create(
-                    ClickHandlersProvideModule(this)
+                    ClickHandlersProvideModule(requireActivity() as MainActivity)
                 )
         component.provideDependenciesFor(this)
     }

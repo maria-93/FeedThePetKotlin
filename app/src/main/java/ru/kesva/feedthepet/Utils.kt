@@ -33,6 +33,17 @@ fun secondsToMs(seconds: Int): Long {
     return (seconds * 1000).toLong()
 }
 
+fun msToDays(milliseconds: Long): Int {
+    return (milliseconds / (1000 * 60 * 60 * 24)).toInt()
+}
+
+fun msToHours(milliseconds: Long):Int {
+    return ((milliseconds / (1000 * 60 * 60)) % 24).toInt()
+}
+
+fun msToMinutes(milliseconds: Long): Int {
+    return ((milliseconds / (1000 * 60)) % 60).toInt()
+}
 fun getFormattedTime(timeInterval: Long): String {
     val minutes = ((timeInterval / (1000 * 60)) % 60).toInt()
     val hours = ((timeInterval / (1000 * 60 * 60)) % 24).toInt()

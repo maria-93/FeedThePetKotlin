@@ -1,12 +1,16 @@
 package ru.kesva.feedthepet.ui.startfragment
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import ru.kesva.feedthepet.MyCountDownTimer
 import ru.kesva.feedthepet.R
 import ru.kesva.feedthepet.databinding.LayoutForRvBinding
 import ru.kesva.feedthepet.domain.model.PetData
+import ru.kesva.feedthepet.getFormattedTime
 import javax.inject.Inject
 
 
@@ -15,10 +19,10 @@ class PetDataAdapter @Inject constructor(
 ) : RecyclerView.Adapter<PetDataViewHolder>() {
 
     var petDataList: List<PetData> = listOf()
-    set(value) {
-        field = value
-        notifyDataSetChanged()
-    }
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PetDataViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -40,14 +44,18 @@ class PetDataAdapter @Inject constructor(
 
     override fun onViewRecycled(holder: PetDataViewHolder) {
         super.onViewRecycled(holder)
+        holder.unbind()
     }
 
     interface AdapterClickHandler {
-        fun petFedButtonClicked(petData: PetData)
+        fun petFedButtonClicked(
+            petData: PetData,
+            myCountDownTimer: MyCountDownTimer,
+            textView: TextView
+        )
+
         fun cancelAlarmButtonClicked(petData: PetData)
         fun editButtonClicked(petData: PetData)
-        fun startTimer(petData: PetData)
-
     }
 
 }
@@ -55,14 +63,34 @@ class PetDataAdapter @Inject constructor(
 class PetDataViewHolder @Inject constructor(
     private val binding: LayoutForRvBinding
 ) : RecyclerView.ViewHolder(binding.root) {
+
+    private val tvForTimer: TextView = binding.tvremaintime
+    private val timer: MyCountDownTimer = MyCountDownTimer()
+
+
     fun bind(
         petData: PetData,
         adapterClickHandler: PetDataAdapter.AdapterClickHandler
     ) {
         binding.petData = petData
         binding.adapterClickHandler = adapterClickHandler
+        binding.timer = timer
+        Log.d("Timer", "bind: ${petData.petName}")
+        tvForTimer.text = getFormattedTime(petData.timeInterval)
+        setListeners(petData)
+
         binding.executePendingBindings()
-        binding.root.setTag(R.id.petdata_key, petData)
+    }
+
+    fun unbind() {
+        timer.stop()
+    }
+
+    private fun setListeners(petData: PetData)  {
+        timer.onTickListener = {
+            Log.d("Timer", "onTickListener: $it животного ${petData.petName}")
+            tvForTimer.text = getFormattedTime(it)
+        }
     }
 }
 

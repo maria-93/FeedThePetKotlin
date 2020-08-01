@@ -12,7 +12,7 @@ interface Repository {
 
     suspend fun deleteAllPetData()
 
-    suspend fun getById(id: Int)
+    suspend fun getById(id: Int): PetData
 
     fun getAllPetData(): LiveData<List<PetData>>
 }

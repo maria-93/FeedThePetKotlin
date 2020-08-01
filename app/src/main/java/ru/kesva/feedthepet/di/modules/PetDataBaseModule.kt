@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
-import ru.kesva.feedthepet.di.ApplicationContext
 import ru.kesva.feedthepet.data.source.local.PetDatabase
+import ru.kesva.feedthepet.di.ApplicationContext
 import javax.inject.Singleton
 
 @Module
@@ -15,6 +15,6 @@ class PetDatabaseModule {
     @Singleton
     @Provides
     fun providePetDatabase(@ApplicationContext context: Context): PetDatabase =
-        Room.databaseBuilder(context, PetDatabase::class.java, databaseName).build()
+        Room.inMemoryDatabaseBuilder(context, PetDatabase::class.java).build()
 
 }
