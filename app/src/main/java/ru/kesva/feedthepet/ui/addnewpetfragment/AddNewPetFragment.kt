@@ -61,7 +61,8 @@ class AddNewPetFragment : Fragment() {
         setUpBinding()
         binding.clickHandler = clickHandler
         buffer = clickHandler.getBuffer()
-        binding.petData = buffer.petData
+        binding.petData = buffer.pet
+
 
         petName.setOnKeyListener(View.OnKeyListener { view, keyCode, keyEvent ->
             if (keyEvent.action == KeyEvent.ACTION_DOWN &&
@@ -89,11 +90,9 @@ class AddNewPetFragment : Fragment() {
                 if (daysInPicker == 0 && hoursInPicker == 0 && minutesInPicker == 0) {
                     showToastTimeMustBeAboveZero()
                 } else {
-                    buffer.petData.petName = name
+                    buffer.pet.petName = name
                     var time = getTotalTime(daysInMs, hoursInMs, minutesInMs)
-                    buffer.petData.timeInterval = time
-                    //buffer.petData.timeForNextFeeding = Calendar.getInstance()
-                        //.apply { timeInMillis = System.currentTimeMillis() + time }
+                    buffer.pet.timeInterval = time
                     clickHandler.onOkButtonClicked()
                     val navController =
                         NavHostFragment.findNavController(this)
@@ -121,7 +120,7 @@ class AddNewPetFragment : Fragment() {
                 .load(imageUri)
                 .apply(RequestOptions.circleCropTransform())
                 .into(petImage)
-            buffer.petData.petImageURI = imageUri.toString()
+            buffer.pet.petImageURI = imageUri.toString()
         }
     }
 

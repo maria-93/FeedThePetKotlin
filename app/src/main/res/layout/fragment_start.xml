@@ -5,7 +5,15 @@
     <data>
     <variable
         name="viewModel"
-        type="ru.kesva.feedthepet.ui.viewmodel.PetDataViewModel" />
+        type="ru.kesva.feedthepet.ui.viewmodel.PetViewModel" />
+
+        <variable
+            name="pet"
+            type="ru.kesva.feedthepet.domain.model.Pet" />
+
+        <variable
+            name="timer"
+            type="ru.kesva.feedthepet.MyCountDownTimer" />
     </data>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -16,10 +24,10 @@
     tools:context=".ui.startfragment.StartFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_pet_data"
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_button"

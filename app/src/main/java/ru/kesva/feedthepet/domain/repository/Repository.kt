@@ -1,18 +1,18 @@
 package ru.kesva.feedthepet.domain.repository
 
 import androidx.lifecycle.LiveData
-import ru.kesva.feedthepet.domain.model.PetData
+import ru.kesva.feedthepet.domain.model.Pet
 
 interface Repository {
-    suspend fun update(petData: PetData)
+    suspend fun update(pet: Pet)
 
-    suspend fun insert(petData: PetData)
+    suspend fun insert(pet: Pet)
 
-    suspend fun delete(petData: PetData)
+    suspend fun delete(pet: Pet)
 
     suspend fun deleteAllPetData()
 
-    suspend fun getById(id: Int): PetData
+    suspend fun getById(id: Int): Pet
 
-    fun getAllPetData(): LiveData<List<PetData>>
+    fun getAllPetData(): LiveData<List<Pet>>
 }

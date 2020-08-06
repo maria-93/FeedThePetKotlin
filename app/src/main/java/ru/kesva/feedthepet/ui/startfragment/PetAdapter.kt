@@ -9,16 +9,17 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.kesva.feedthepet.MyCountDownTimer
 import ru.kesva.feedthepet.R
 import ru.kesva.feedthepet.databinding.LayoutForRvBinding
-import ru.kesva.feedthepet.domain.model.PetData
+import ru.kesva.feedthepet.domain.model.Pet
 import ru.kesva.feedthepet.getFormattedTime
 import javax.inject.Inject
 
 
-class PetDataAdapter @Inject constructor(
+class PetAdapter @Inject constructor(
     private val adapterClickHandler: AdapterClickHandler
 ) : RecyclerView.Adapter<PetDataViewHolder>() {
+    var timerSet: MutableSet<MyCountDownTimer> = mutableSetOf()
 
-    var petDataList: List<PetData> = listOf()
+    var petList: List<Pet> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -35,28 +36,43 @@ class PetDataAdapter @Inject constructor(
         return PetDataViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = petDataList.size
+    override fun getItemCount(): Int = petList.size
 
 
     override fun onBindViewHolder(holder: PetDataViewHolder, position: Int) {
-        petDataList[position].let { holder.bind(it, adapterClickHandler) }
+        petList[position].let {
+            holder.bind(it, adapterClickHandler, timerSet)
+        }
+
     }
 
     override fun onViewRecycled(holder: PetDataViewHolder) {
         super.onViewRecycled(holder)
-        holder.unbind()
+        Log.d("Timer", "onViewRecycled: $holder")
+        holder.unbind(timerSet)
+    }
+
+    override fun onViewDetachedFromWindow(holder: PetDataViewHolder) {
+        super.onViewDetachedFromWindow(holder)
+        Log.d("Timer", "onViewDetachedFromWindow: ")
+        holder.unbind(timerSet)
     }
 
     interface AdapterClickHandler {
         fun petFedButtonClicked(
-            petData: PetData,
+            pet: Pet,
             myCountDownTimer: MyCountDownTimer,
             textView: TextView
         )
 
-        fun cancelAlarmButtonClicked(petData: PetData)
-        fun editButtonClicked(petData: PetData)
+        fun cancelAlarmButtonClicked(pet: Pet)
+        fun editButtonClicked(pet: Pet)
     }
+
+    fun stopTimers() {
+        timerSet.forEach { it.stop() }
+    }
+
 
 }
 
@@ -69,29 +85,36 @@ class PetDataViewHolder @Inject constructor(
 
 
     fun bind(
-        petData: PetData,
-        adapterClickHandler: PetDataAdapter.AdapterClickHandler
+        pet: Pet,
+        adapterClickHandler: PetAdapter.AdapterClickHandler,
+        timerSet: MutableSet<MyCountDownTimer>
     ) {
-        binding.petData = petData
+        binding.pet = pet
         binding.adapterClickHandler = adapterClickHandler
         binding.timer = timer
-        Log.d("Timer", "bind: ${petData.petName}")
-        tvForTimer.text = getFormattedTime(petData.timeInterval)
-        setListeners(petData)
+
+        timerSet.add(timer)
+        Log.d("Timer", "bind: ${pet.petName} $this")
+        tvForTimer.text = getFormattedTime(pet.timeInterval)
+        setListeners(pet)
 
         binding.executePendingBindings()
     }
 
-    fun unbind() {
+    fun unbind(timerSet: MutableSet<MyCountDownTimer>) {
         timer.stop()
+        timerSet.remove(timer)
+
     }
 
-    private fun setListeners(petData: PetData)  {
+    private fun setListeners(pet: Pet) {
         timer.onTickListener = {
-            Log.d("Timer", "onTickListener: $it животного ${petData.petName}")
+            Log.d("Timer", "onTickListener: $it животного ${pet.petName}")
             tvForTimer.text = getFormattedTime(it)
         }
     }
+
+
 }
 
 

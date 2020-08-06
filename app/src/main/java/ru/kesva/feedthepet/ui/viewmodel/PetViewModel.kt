@@ -11,15 +11,15 @@ import ru.kesva.feedthepet.MyCountDownTimer
 import ru.kesva.feedthepet.data.model.Buffer
 import ru.kesva.feedthepet.data.model.Event
 import ru.kesva.feedthepet.data.model.PetDataAction
-import ru.kesva.feedthepet.domain.model.PetData
+import ru.kesva.feedthepet.domain.model.Pet
 import ru.kesva.feedthepet.domain.repository.Repository
 import ru.kesva.feedthepet.domain.usecases.*
 import ru.kesva.feedthepet.ui.addnewpetfragment.PetCreationClickHandler
-import ru.kesva.feedthepet.ui.startfragment.PetDataAdapter
+import ru.kesva.feedthepet.ui.startfragment.PetAdapter
 import java.util.*
 import javax.inject.Inject
 
-class PetDataViewModel @Inject constructor(
+class PetViewModel @Inject constructor(
     private val unregisterAlarmUseCase: UnregisterAlarmUseCase,
     private val startTimerUseCase: StartTimerUseCase,
     private val stopTimerUseCase: StopTimerUseCase,
@@ -28,7 +28,7 @@ class PetDataViewModel @Inject constructor(
     private val deletePetUseCase: DeletePetUseCase,
     private val petFedUseCase: PetFedUseCase,
     private val repositoryImpl: Repository
-) : ViewModel(), PetDataAdapter.AdapterClickHandler, PetCreationClickHandler {
+) : ViewModel(), PetAdapter.AdapterClickHandler, PetCreationClickHandler {
 
     private lateinit var buffer: Buffer
 
@@ -41,16 +41,18 @@ class PetDataViewModel @Inject constructor(
     private val _editButtonClicked: MutableLiveData<Event<Any>> = MutableLiveData()
     val editButtonClicked: LiveData<Event<Any>> = _editButtonClicked
 
-    val allPetLiveData: LiveData<List<PetData>>
+    val allPetLive: LiveData<List<Pet>>
         get() = repositoryImpl.getAllPetData()
 
+
     fun createPet() {
-        val petData: PetData = getNewPet()
+        val pet: Pet = getNewPet()
         buffer = Buffer(
-            petData,
+            pet,
             PetDataAction.CREATE_PET
         )
         _createNewPet.postValue(Event(Any()))
+
     }
 
     override fun getBuffer(): Buffer {
@@ -58,15 +60,20 @@ class PetDataViewModel @Inject constructor(
     }
 
     override fun petFedButtonClicked(
-        petData: PetData,
+        pet: Pet,
         myCountDownTimer: MyCountDownTimer,
         textView: TextView
     ) {
         Log.d("Timer", "petFedButtonClicked: ")
-        var timeInFuture = System.currentTimeMillis() + petData.timeInterval
+        var timeInFuture = System.currentTimeMillis() + pet.timeInterval
+        pet.timeInFuture = timeInFuture
+        viewModelScope.launch {
+            repositoryImpl.update(pet)
+        }
         var remainTime = timeInFuture - System.currentTimeMillis()
-        Log.d("Timer", "petFedButtonClicked: животное ${petData.petName} с интервалом $remainTime")
+        Log.d("Timer", "petFedButtonClicked: животное ${pet.petName} с интервалом $remainTime")
         myCountDownTimer.start(remainTime)
+        pet.isTimerRunning = true
 
 
        /* viewModelScope.launch {
@@ -78,13 +85,15 @@ class PetDataViewModel @Inject constructor(
     }
 
 
-    override fun cancelAlarmButtonClicked(petData: PetData) {
-        unregisterAlarmUseCase.unregisterAlarm(petData.id)
+
+
+    override fun cancelAlarmButtonClicked(pet: Pet) {
+        unregisterAlarmUseCase.unregisterAlarm(pet.id)
     }
 
-    override fun editButtonClicked(petData: PetData) {
+    override fun editButtonClicked(pet: Pet) {
         buffer = Buffer(
-            petData,
+            pet,
             PetDataAction.UPDATE_PET
         )
         _editButtonClicked.value = Event(Any())
@@ -93,16 +102,16 @@ class PetDataViewModel @Inject constructor(
     override fun onOkButtonClicked() {
         viewModelScope.launch {
             when (buffer.petDataAction) {
-                PetDataAction.CREATE_PET -> addNewPetUseCase.addNewPet(buffer.petData)
-                PetDataAction.UPDATE_PET -> updatePetUseCase.updatePet(buffer.petData)
+                PetDataAction.CREATE_PET -> addNewPetUseCase.addNewPet(buffer.pet)
+                PetDataAction.UPDATE_PET -> updatePetUseCase.updatePet(buffer.pet)
             }
         }
     }
 
-    private fun getNewPet(): PetData {
+    private fun getNewPet(): Pet {
         val calendar: Calendar = Calendar.getInstance()
         calendar.timeInMillis = 0
-        return PetData(0, "", 0, "")
+        return Pet(0, "", 0, "", false, 0)
     }
 
 

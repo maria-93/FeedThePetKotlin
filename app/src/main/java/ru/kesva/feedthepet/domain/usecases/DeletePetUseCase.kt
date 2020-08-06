@@ -1,11 +1,11 @@
 package ru.kesva.feedthepet.domain.usecases
 
-import ru.kesva.feedthepet.domain.model.PetData
+import ru.kesva.feedthepet.domain.model.Pet
 import ru.kesva.feedthepet.domain.repository.Repository
 import javax.inject.Inject
 
 class DeletePetUseCase @Inject constructor(private val repository: Repository) {
-    suspend fun deletePet(petData: PetData) {
-        repository.delete(petData)
+    suspend fun deletePet(pet: Pet) {
+        repository.delete(pet)
     }
 }

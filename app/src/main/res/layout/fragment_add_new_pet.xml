@@ -5,7 +5,7 @@
     <data>
         <variable
             name="petData"
-            type="ru.kesva.feedthepet.domain.model.PetData" />
+            type="ru.kesva.feedthepet.domain.model.Pet" />
 
         <variable
             name="clickHandler"

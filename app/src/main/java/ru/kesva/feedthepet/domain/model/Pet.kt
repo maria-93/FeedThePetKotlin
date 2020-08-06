@@ -4,22 +4,24 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "petData")
-class PetData(
+class Pet(
     @PrimaryKey(autoGenerate = true)
     var id: Int,
     var petName: String,
-    //var timeForNextFeeding: Calendar,
     var timeInterval: Long,
-    var petImageURI: String
+    var petImageURI: String,
+    var isTimerRunning: Boolean,
+    var timeInFuture: Long
 ) {
 
 
-    fun getCopy() = PetData(
+    fun getCopy() = Pet(
         this.id,
         this.petName,
-        //this.timeForNextFeeding,
         this.timeInterval,
-        this.petImageURI
+        this.petImageURI,
+        this.isTimerRunning,
+        this.timeInFuture
     )
 }
 

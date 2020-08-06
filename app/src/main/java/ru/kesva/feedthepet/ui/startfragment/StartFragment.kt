@@ -16,7 +16,7 @@ import ru.kesva.feedthepet.di.modules.ClickHandlersProvideModule
 import ru.kesva.feedthepet.di.subcomponents.StartComponent
 import ru.kesva.feedthepet.extensions.getViewModel
 import ru.kesva.feedthepet.ui.MainActivity
-import ru.kesva.feedthepet.ui.viewmodel.PetDataViewModel
+import ru.kesva.feedthepet.ui.viewmodel.PetViewModel
 import javax.inject.Inject
 
 /**
@@ -25,16 +25,17 @@ import javax.inject.Inject
 class StartFragment : Fragment() {
     private lateinit var component: StartComponent
     private lateinit var navController: NavController
+    private lateinit var binding: FragmentStartBinding
 
 
     @Inject
-    lateinit var adapter: PetDataAdapter
+    lateinit var adapter: PetAdapter
 
     @Inject
     lateinit var factory: ViewModelFactory
 
     @Inject
-    lateinit var viewModel: PetDataViewModel
+    lateinit var viewModel: PetViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,9 +47,13 @@ class StartFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentStartBinding.inflate(inflater)
-        binding.rvPetData.adapter = adapter
+        binding = FragmentStartBinding.inflate(inflater)
+        binding.recyclerView.adapter = adapter
         binding.viewModel = viewModel
+
+       /* if (pet.isRunning) {
+            timer.start()
+        }*/
         return binding.root
     }
 
@@ -60,8 +65,9 @@ class StartFragment : Fragment() {
 
     private fun subscribeToEvents() {
         with(viewModel) {
-            allPetLiveData.observe(viewLifecycleOwner, Observer {
-                adapter.petDataList = it
+            allPetLive.observe(viewLifecycleOwner, Observer {
+                adapter.petList = it
+
             })
 
             createNewPet.observe(viewLifecycleOwner, Observer {
@@ -77,8 +83,6 @@ class StartFragment : Fragment() {
             })
 
             petFedButtonClicked.observe(viewLifecycleOwner, Observer {
-        //        val textView: TextView = requireView().findViewById(R.id.tv_time_for_next_feeding)
-          //     textView.visibility = View.VISIBLE
             })
         }
     }
@@ -94,5 +98,23 @@ class StartFragment : Fragment() {
 
         viewModel = getViewModel(factory, requireActivity())
     }
+
+    override fun onPause() {
+        super.onPause()
+        adapter.stopTimers()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        adapter.stopTimers()
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        adapter.stopTimers()
+    }
+
+
 
 }

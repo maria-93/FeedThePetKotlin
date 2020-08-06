@@ -2,30 +2,30 @@ package ru.kesva.feedthepet
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import ru.kesva.feedthepet.domain.model.PetData
+import ru.kesva.feedthepet.domain.model.Pet
 import ru.kesva.feedthepet.domain.repository.Repository
 
 class FakeRepository : Repository {
 
 
 
-    val petDataSet = mutableSetOf<PetData>()
-    val liveData = MutableLiveData<List<PetData>>()
+    val petDataSet = mutableSetOf<Pet>()
+    val liveData = MutableLiveData<List<Pet>>()
 
-    override suspend fun update(petData: PetData) {
-        if (petDataSet.contains(petData)) {
-            petDataSet.add(petData)
+    override suspend fun update(pet: Pet) {
+        if (petDataSet.contains(pet)) {
+            petDataSet.add(pet)
             notifyObservers()
         }
     }
 
-    override suspend fun insert(petData: PetData) {
-        petDataSet.add(petData)
+    override suspend fun insert(pet: Pet) {
+        petDataSet.add(pet)
         notifyObservers()
     }
 
-    override suspend fun delete(petData: PetData) {
-        petDataSet.remove(petData)
+    override suspend fun delete(pet: Pet) {
+        petDataSet.remove(pet)
         notifyObservers()
     }
 
@@ -34,11 +34,11 @@ class FakeRepository : Repository {
         notifyObservers()
     }
 
-    override suspend fun getById(id: Int): PetData =
+    override suspend fun getById(id: Int): Pet =
         petDataSet.find { it.id == id } ?: throw Exception("PetData not found")
 
 
-    override fun getAllPetData(): LiveData<List<PetData>> {
+    override fun getAllPetData(): LiveData<List<Pet>> {
         return liveData
     }
 
@@ -48,9 +48,9 @@ class FakeRepository : Repository {
 
     }
 
-    private fun getPetDataCopySortedById(petDataCollection: Collection<PetData>): MutableList<PetData> {
-        val list = mutableListOf<PetData>()
-        petDataCollection.forEach { originalPetData ->
+    private fun getPetDataCopySortedById(petCollection: Collection<Pet>): MutableList<Pet> {
+        val list = mutableListOf<Pet>()
+        petCollection.forEach { originalPetData ->
             list.add(originalPetData.getCopy())
         }
         list.sortBy { it.id }

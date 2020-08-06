@@ -7,7 +7,7 @@ import ru.kesva.feedthepet.R
 import ru.kesva.feedthepet.di.ViewModelFactory
 import ru.kesva.feedthepet.di.subcomponents.MainActivityComponent
 import ru.kesva.feedthepet.extensions.getViewModel
-import ru.kesva.feedthepet.ui.viewmodel.PetDataViewModel
+import ru.kesva.feedthepet.ui.viewmodel.PetViewModel
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var factory: ViewModelFactory
 
     @Inject
-    lateinit var viewModel: PetDataViewModel
+    lateinit var viewModel: PetViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         injectDependencies()

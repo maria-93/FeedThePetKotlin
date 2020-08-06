@@ -7,12 +7,12 @@
     <data>
         <import type="com.bumptech.glide.Glide"/>
         <variable
-            name="petData"
-            type="ru.kesva.feedthepet.domain.model.PetData" />
+            name="pet"
+            type="ru.kesva.feedthepet.domain.model.Pet" />
 
         <variable
             name="adapterClickHandler"
-            type="ru.kesva.feedthepet.ui.startfragment.PetDataAdapter.AdapterClickHandler" />
+            type="ru.kesva.feedthepet.ui.startfragment.PetAdapter.AdapterClickHandler" />
 
         <variable
             name="timer"
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:text="@{petData.petName}"
+            android:text="@{pet.petName}"
             android:textSize="24sp"
             android:textColor="@color/colorMain"
             app:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +56,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:onClick="@{() -> adapterClickHandler.petFedButtonClicked(petData, timer, tvremaintime)}"
+                app:bindTimer="@{timer}"
+                app:bindPet="@{pet}"
+                app:bindTextView="@{tvremaintime}"
+                android:onClick="@{() -> adapterClickHandler.petFedButtonClicked(pet, timer, tvremaintime)}"
                 android:src="@drawable/ic_pet_fed" />
 
             <ImageView
@@ -64,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:onClick="@{()-> adapterClickHandler.cancelAlarmButtonClicked(petData)}"
+                android:onClick="@{()-> adapterClickHandler.cancelAlarmButtonClicked(pet)}"
                 android:src="@drawable/ic_alarm_off" />
         </LinearLayout>
 
@@ -76,7 +79,7 @@
             android:layout_marginTop="8dp"
             android:scaleType="centerCrop"
             android:src="@color/colorPrimary"
-            app:loadImage="@{petData.petImageURI}"
+            app:loadImage="@{pet.petImageURI}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -120,7 +123,7 @@
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:layout_margin="2dp"
-            android:onClick="@{() -> adapterClickHandler.editButtonClicked(petData)}"
+            android:onClick="@{() -> adapterClickHandler.editButtonClicked(pet)}"
             android:src="@drawable/edit"
             app:layout_constraintBottom_toBottomOf="@+id/tvremaintime"
             app:layout_constraintEnd_toEndOf="parent"
