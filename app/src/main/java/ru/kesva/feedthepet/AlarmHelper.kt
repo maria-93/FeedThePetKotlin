@@ -17,13 +17,13 @@ const val STARTING_ACTIVITY_PENDING_INTENT_ID = 100
 
 fun getPendingIntentForNotification(
     context: Context,
-    petId: Long
+    petId: Int
 ): PendingIntent {
     val intent = Intent(context, AlertReceiver::class.java)
     intent.putExtra("pet_id_key", petId)
     return PendingIntent.getBroadcast(
         context,
-        petId.toInt(),
+        petId,
         intent,
         PendingIntent.FLAG_UPDATE_CURRENT
     )
@@ -42,7 +42,7 @@ fun getPendingIntentForCancel(
     )
 }
 
-fun sendNotification(context: Context, petId: Long) {
+fun sendNotification(context: Context, petId: Int) {
     val notificationManager =
         context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -66,7 +66,7 @@ fun sendNotification(context: Context, petId: Long) {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
         builder.priority = NotificationCompat.PRIORITY_HIGH
     }
-    notificationManager.notify(petId.toInt(), builder.build())
+    notificationManager.notify(petId, builder.build())
 }
 
 private fun launchApp(context: Context): PendingIntent {

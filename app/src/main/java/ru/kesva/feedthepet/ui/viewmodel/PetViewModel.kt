@@ -26,7 +26,6 @@ class PetViewModel @Inject constructor(
     private val addNewPetUseCase: AddNewPetUseCase,
     private val updatePetUseCase: UpdatePetUseCase,
     private val deletePetUseCase: DeletePetUseCase,
-    private val petFedUseCase: PetFedUseCase,
     private val repositoryImpl: Repository
 ) : ViewModel(), PetAdapter.AdapterClickHandler, PetCreationClickHandler {
 
@@ -74,21 +73,14 @@ class PetViewModel @Inject constructor(
         Log.d("Timer", "petFedButtonClicked: животное ${pet.petName} с интервалом $remainTime")
         myCountDownTimer.start(remainTime)
         pet.isTimerRunning = true
+        repositoryImpl.registerAndStartAlarm(pet.id, timeInFuture)
 
-
-       /* viewModelScope.launch {
-            petFedUseCase.petFed(petData)
-
-        }*/
         _petFedButtonClicked.value = Event(Any())
 
     }
 
-
-
-
     override fun cancelAlarmButtonClicked(pet: Pet) {
-        unregisterAlarmUseCase.unregisterAlarm(pet.id)
+       repositoryImpl.cancelAlarm(pet.id)
     }
 
     override fun editButtonClicked(pet: Pet) {

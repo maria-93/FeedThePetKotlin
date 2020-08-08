@@ -15,4 +15,13 @@ interface Repository {
     suspend fun getById(id: Int): Pet
 
     fun getAllPetData(): LiveData<List<Pet>>
+
+    fun registerAndStartAlarm(
+    petId: Int,
+    triggerTime: Long
+    )
+
+    fun cancelAlarm(petId: Int)
+
+
 }
