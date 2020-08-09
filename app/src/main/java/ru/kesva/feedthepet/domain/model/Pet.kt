@@ -10,7 +10,6 @@ class Pet(
     var petName: String,
     var timeInterval: Long,
     var petImageURI: String,
-    var isTimerRunning: Boolean,
     var timeInFuture: Long
 ) {
 
@@ -20,7 +19,6 @@ class Pet(
         this.petName,
         this.timeInterval,
         this.petImageURI,
-        this.isTimerRunning,
         this.timeInFuture
     )
 }

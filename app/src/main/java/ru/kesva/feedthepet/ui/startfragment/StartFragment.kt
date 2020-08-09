@@ -14,6 +14,7 @@ import ru.kesva.feedthepet.databinding.FragmentStartBinding
 import ru.kesva.feedthepet.di.ViewModelFactory
 import ru.kesva.feedthepet.di.modules.ClickHandlersProvideModule
 import ru.kesva.feedthepet.di.subcomponents.StartComponent
+import ru.kesva.feedthepet.domain.model.Pet
 import ru.kesva.feedthepet.extensions.getViewModel
 import ru.kesva.feedthepet.ui.MainActivity
 import ru.kesva.feedthepet.ui.viewmodel.PetViewModel
@@ -51,9 +52,6 @@ class StartFragment : Fragment() {
         binding.recyclerView.adapter = adapter
         binding.viewModel = viewModel
 
-       /* if (pet.isRunning) {
-            timer.start()
-        }*/
         return binding.root
     }
 
@@ -63,16 +61,25 @@ class StartFragment : Fragment() {
         subscribeToEvents()
     }
 
+
+
     private fun subscribeToEvents() {
         with(viewModel) {
             allPetLive.observe(viewLifecycleOwner, Observer {
-                adapter.petList = it
+                adapter.petList = it as MutableList<Pet>
 
             })
 
             createNewPet.observe(viewLifecycleOwner, Observer {
                 it.getContentIfNotHandled()?.let {
                     navController.navigate(R.id.action_startFragment_to_addNewPetFragment)
+                }
+            })
+
+            deletePet.observe(viewLifecycleOwner, Observer { pet ->
+                pet.getContentIfNotHandled()?.let {
+                    adapter.petList.remove(it)
+                    adapter.notifyDataSetChanged()
                 }
             })
 
@@ -86,6 +93,8 @@ class StartFragment : Fragment() {
             })
         }
     }
+
+
 
 
     private fun injectDependencies() {

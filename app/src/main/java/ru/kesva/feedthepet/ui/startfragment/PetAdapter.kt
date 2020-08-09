@@ -19,7 +19,7 @@ class PetAdapter @Inject constructor(
 ) : RecyclerView.Adapter<PetDataViewHolder>() {
     var timerSet: MutableSet<MyCountDownTimer> = mutableSetOf()
 
-    var petList: List<Pet> = listOf()
+    var petList: MutableList<Pet> = mutableListOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -67,6 +67,7 @@ class PetAdapter @Inject constructor(
 
         fun cancelAlarmButtonClicked(pet: Pet)
         fun editButtonClicked(pet: Pet)
+        fun deleteButtonClicked(pet: Pet)
     }
 
     fun stopTimers() {

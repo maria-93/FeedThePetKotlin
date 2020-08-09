@@ -8,7 +8,7 @@ import ru.kesva.feedthepet.ui.viewmodel.PetViewModel
 import ru.kesva.feedthepet.di.ViewModelKey
 
 @Module
-abstract class PetDataBindModule {
+abstract class PetBindModule {
     @Binds
     @IntoMap
     @ViewModelKey(PetViewModel::class)
