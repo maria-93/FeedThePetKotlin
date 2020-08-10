@@ -51,7 +51,6 @@ class StartFragment : Fragment() {
         binding = FragmentStartBinding.inflate(inflater)
         binding.recyclerView.adapter = adapter
         binding.viewModel = viewModel
-
         return binding.root
     }
 
@@ -60,7 +59,6 @@ class StartFragment : Fragment() {
         navController = NavHostFragment.findNavController(this)
         subscribeToEvents()
     }
-
 
 
     private fun subscribeToEvents() {
@@ -95,8 +93,6 @@ class StartFragment : Fragment() {
     }
 
 
-
-
     private fun injectDependencies() {
         component =
             (requireContext().applicationContext as FeedThePetApplication).appComponent.startComponent()
@@ -104,7 +100,6 @@ class StartFragment : Fragment() {
                     ClickHandlersProvideModule(requireActivity() as MainActivity)
                 )
         component.provideDependenciesFor(this)
-
         viewModel = getViewModel(factory, requireActivity())
     }
 
@@ -123,7 +118,6 @@ class StartFragment : Fragment() {
         super.onDestroyView()
         adapter.stopTimers()
     }
-
 
 
 }

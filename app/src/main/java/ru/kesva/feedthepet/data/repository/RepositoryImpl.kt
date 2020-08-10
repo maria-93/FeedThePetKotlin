@@ -24,9 +24,6 @@ class RepositoryImpl @Inject constructor(
 
     private val petDataDao = petDatabase.petDataDao()
 
-   /* @Inject
-    lateinit var alarmManager: AlarmManager*/
-
     override suspend fun update(pet: Pet) {
         withContext(Dispatchers.IO) {
             petDataDao.update(pet)

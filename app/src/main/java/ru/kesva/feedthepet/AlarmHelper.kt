@@ -10,11 +10,10 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import ru.kesva.feedthepet.service.AlertReceiver
-import ru.kesva.feedthepet.ui.startfragment.StartFragment
+import ru.kesva.feedthepet.ui.MainActivity
 
 const val NOTIFICATION_CHANNEL_ID = "notification_channel"
 const val STARTING_ACTIVITY_PENDING_INTENT_ID = 100
-
 fun getPendingIntentForNotification(
     context: Context,
     petId: Int
@@ -60,7 +59,7 @@ fun sendNotification(context: Context, petId: Int) {
         .setContentText("Настало время покормить питомца")
         .setStyle(NotificationCompat.BigTextStyle().bigText("Настало время покормить питомца"))
         .setDefaults(Notification.DEFAULT_VIBRATE)
-        .setContentIntent(launchApp(context))
+        .setContentIntent(openMainActivity(context))
         .setAutoCancel(true)
 
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
@@ -69,8 +68,8 @@ fun sendNotification(context: Context, petId: Int) {
     notificationManager.notify(petId, builder.build())
 }
 
-private fun launchApp(context: Context): PendingIntent {
-    val startActivityIntent = Intent(context, StartFragment::class.java)
+private fun openMainActivity(context: Context): PendingIntent {
+    val startActivityIntent = Intent(context, MainActivity::class.java)
     return PendingIntent.getActivity(
         context,
         STARTING_ACTIVITY_PENDING_INTENT_ID,

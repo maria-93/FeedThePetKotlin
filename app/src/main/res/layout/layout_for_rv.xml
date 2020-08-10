@@ -104,20 +104,6 @@
             app:layout_constraintStart_toStartOf="@+id/petImageRv"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-       <!-- <TextView
-            android:id="@+id/tv_time_for_next_feeding"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            app:textForNextFeeding="@{petData.timeForNextFeeding}"
-            android:textColor="#000000"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_next_feeding"
-            app:layout_constraintStart_toEndOf="@+id/tv_next_feeding"
-            app:layout_constraintTop_toTopOf="@+id/tv_next_feeding"
-            tools:text="00:32"
-            android:visibility="invisible"/>-->
-
         <ImageView
             android:id="@+id/iv_edit"
             android:layout_width="30dp"

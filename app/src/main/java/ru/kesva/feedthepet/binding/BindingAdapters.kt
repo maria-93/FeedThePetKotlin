@@ -35,7 +35,7 @@ fun bindDataForTimerLaunch(view: View, timer: MyCountDownTimer, textView: TextVi
     val remainTime = pet.timeInFuture - System.currentTimeMillis()
     if (remainTime > 0) {
         timer.start(remainTime)
-        //textView.text = getFormattedTime(remainTime)
+
     }
 }
 
