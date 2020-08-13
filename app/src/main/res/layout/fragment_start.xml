@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout>
-
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
     <variable
         name="viewModel"
@@ -16,11 +17,10 @@
             type="ru.kesva.feedthepet.MyCountDownTimer" />
     </data>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     tools:context=".ui.startfragment.StartFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -35,6 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
+        android:theme="@style/PrimaryActionButton"
         android:src="@drawable/add_for_fab"
         android:onClick="@{() -> viewModel.createPet()}"
         android:layout_margin="16dp"/>

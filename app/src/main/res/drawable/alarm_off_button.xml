@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/circle_2"
+        android:drawable="@drawable/circle"/>
+
+    <item
+        android:id="@+id/alarm_off"
+        android:drawable="@drawable/alarm_off"
+        android:gravity="center"/>
+</layer-list>

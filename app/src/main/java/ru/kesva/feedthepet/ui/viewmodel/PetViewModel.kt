@@ -106,8 +106,6 @@ class PetViewModel @Inject constructor(
 
     }
 
-
-
     override fun onOkButtonClicked() {
         viewModelScope.launch {
             when (buffer.petDataAction) {

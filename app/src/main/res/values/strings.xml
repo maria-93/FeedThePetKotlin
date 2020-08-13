@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Feed The Pet</string>
+    <string name="app_name">Покорми питомца</string>
     <string name="pet_fed">Питомец накормлен</string>
     <string name="time_before_feeding">Время до кормления:</string>
     <string name="fake_time">01:32</string>

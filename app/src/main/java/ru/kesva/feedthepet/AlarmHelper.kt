@@ -74,6 +74,6 @@ private fun openMainActivity(context: Context): PendingIntent {
         context,
         STARTING_ACTIVITY_PENDING_INTENT_ID,
         startActivityIntent,
-        PendingIntent.FLAG_UPDATE_CURRENT
+        0
     )
 }
