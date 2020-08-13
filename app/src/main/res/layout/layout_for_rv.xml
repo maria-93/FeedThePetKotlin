@@ -38,14 +38,26 @@
                 android:id="@+id/tv_pet_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
                 android:text="@{pet.petName}"
                 android:textColor="@color/black"
                 android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/petImageRv"
+                android:layout_marginTop="118dp"
+                android:layout_marginLeft="8dp"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 tools:text="Зябличка" />
+
+            <TextView
+                android:id="@+id/time_before_feeding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toStartOf="@+id/iv_delete"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="8dp"
+                android:text="Время до кормления:" />
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -93,10 +105,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
+                android:layout_marginTop="8dp"
                 android:textSize="28sp"
-                app:layout_constraintEnd_toEndOf="@+id/tv_pet_name"
-                app:layout_constraintStart_toStartOf="@+id/tv_pet_name"
-                app:layout_constraintTop_toBottomOf="@+id/tv_pet_name"
+                app:layout_constraintEnd_toEndOf="@+id/time_before_feeding"
+                app:layout_constraintStart_toStartOf="@+id/time_before_feeding"
+                app:layout_constraintTop_toBottomOf="@+id/time_before_feeding"
                 tools:text="@string/fake_time" />
 
             <TextView
@@ -105,9 +118,10 @@
                 android:layout_height="wrap_content"
                 android:text="Следующее кормление:"
                 android:textColor="@color/black"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="@+id/petImageRv"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+                android:textSize="14sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="@+id/tv_pet_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_pet_name" />
 
             <ImageView
                 android:id="@+id/iv_edit"
@@ -115,10 +129,10 @@
                 android:layout_height="30dp"
                 android:onClick="@{() -> adapterClickHandler.editButtonClicked(pet)}"
                 android:src="@drawable/edit"
-                app:layout_constraintBottom_toBottomOf="@+id/tvremaintime"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tvremaintime"
-                app:layout_constraintTop_toBottomOf="@+id/tv_pet_name" />
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/iv_delete"
+                app:layout_constraintStart_toStartOf="@+id/iv_delete"
+                app:layout_constraintTop_toBottomOf="@+id/iv_delete" />
 
             <ImageView
                 android:id="@+id/iv_delete"
@@ -127,7 +141,7 @@
                 android:onClick="@{() -> adapterClickHandler.deleteButtonClicked(pet)}"
                 android:src="@drawable/delete_pet"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/time_before_feeding" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
