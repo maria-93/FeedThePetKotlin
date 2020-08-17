@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/circle_2"
-        android:drawable="@drawable/circle"/>
+        android:drawable="@android:color/transparent"/>
 
     <item
         android:id="@+id/alarm_off"

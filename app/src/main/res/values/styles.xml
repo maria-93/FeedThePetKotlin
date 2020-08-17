@@ -13,10 +13,18 @@
     </style>
     
     <style name="PrimaryActionButton" parent="Theme.AppCompat.Light">
-        <item name="colorSecondary">@color/colorPrimary</item>
-        <item name="colorOnSecondary">@color/colorAccentDark</item>
+    <item name="colorSecondary">@color/colorPrimary</item>
+    <item name="colorOnSecondary">@color/colorAccentDark</item>
+
+</style>
+
+    <style name="AccentActionButton" parent="Theme.AppCompat.Light">
+        <item name="colorSecondary">#51a5a7</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
 
     </style>
+
+
 
     <style name="ColorForButton">
         <item name="colorPrimary">@color/colorAccentDark</item>

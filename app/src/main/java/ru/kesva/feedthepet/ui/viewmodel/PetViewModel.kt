@@ -63,7 +63,7 @@ class PetViewModel @Inject constructor(
     override fun petFedButtonClicked(
         pet: Pet,
         myCountDownTimer: MyCountDownTimer,
-        textView: TextView
+        remainTimeTextView: TextView
     ) {
         Log.d("Timer", "petFedButtonClicked: ")
         var timeInFuture = System.currentTimeMillis() + pet.timeInterval

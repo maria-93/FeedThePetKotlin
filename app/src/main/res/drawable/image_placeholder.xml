@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/square_placeholder"
+        android:drawable="@drawable/circle_placeholder" />
+    <item
+        android:id="@+id/paw_placeholder"
+        android:drawable="@drawable/paw_for_placeholder"
+        android:gravity="center" />
+
+</layer-list>

@@ -24,11 +24,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="16dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:background="@color/backgroundRecyclerView"
-        android:elevation="8dp">
+        android:elevation="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -41,10 +41,10 @@
                 android:text="@{pet.petName}"
                 android:textColor="@color/black"
                 android:textSize="24sp"
-                android:layout_marginTop="118dp"
-                android:layout_marginLeft="8dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/petImageRv"
+                app:layout_constraintStart_toStartOf="@+id/petImageRv"
+                app:layout_constraintTop_toBottomOf="@+id/petImageRv"
                 tools:text="Зябличка" />
 
             <TextView
@@ -64,6 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="@+id/tvremaintime"
                 app:layout_constraintStart_toStartOf="@+id/tvremaintime"
                 app:layout_constraintTop_toBottomOf="@+id/tvremaintime">
@@ -73,6 +74,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="0dp"
                     android:onClick="@{() -> adapterClickHandler.petFedButtonClicked(pet, timer, tvremaintime)}"
                     android:src="@drawable/paw_button"
                     app:bindPet="@{pet}"
@@ -84,6 +87,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="0dp"
                     android:onClick="@{()-> adapterClickHandler.cancelAlarmButtonClicked(pet)}"
                     android:src="@drawable/alarm_off_button" />
             </LinearLayout>
@@ -95,7 +100,6 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:scaleType="centerCrop"
-                android:src="@color/colorPrimary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:loadImage="@{pet.petImageURI}" />
@@ -116,12 +120,13 @@
                 android:id="@+id/tv_next_feeding"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Следующее кормление:"
+                android:layout_marginTop="16dp"
+                android:text="Покорми меня в:"
                 android:textColor="@color/black"
                 android:textSize="14sp"
-                android:layout_marginTop="16dp"
-                app:layout_constraintStart_toStartOf="@+id/tv_pet_name"
-                app:layout_constraintTop_toBottomOf="@id/tv_pet_name" />
+                app:layout_constraintStart_toStartOf="@+id/petImageRv"
+                app:layout_constraintTop_toBottomOf="@id/tv_pet_name"
+                app:textForNextFeeding="@{pet}" />
 
             <ImageView
                 android:id="@+id/iv_edit"

@@ -62,7 +62,7 @@ class PetAdapter @Inject constructor(
         fun petFedButtonClicked(
             pet: Pet,
             myCountDownTimer: MyCountDownTimer,
-            textView: TextView
+            remainTimeTextView: TextView
         )
 
         fun cancelAlarmButtonClicked(pet: Pet)

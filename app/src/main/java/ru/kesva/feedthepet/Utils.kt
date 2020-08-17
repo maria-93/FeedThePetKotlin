@@ -37,23 +37,43 @@ fun msToDays(milliseconds: Long): Int {
     return (milliseconds / (1000 * 60 * 60 * 24)).toInt()
 }
 
-fun msToHours(milliseconds: Long):Int {
+fun msToHours(milliseconds: Long): Int {
     return ((milliseconds / (1000 * 60 * 60)) % 24).toInt()
 }
 
 fun msToMinutes(milliseconds: Long): Int {
     return ((milliseconds / (1000 * 60)) % 60).toInt()
 }
+
 fun getFormattedTime(timeInterval: Long): String {
     val minutes = ((timeInterval / (1000 * 60)) % 60).toInt()
     val hours = ((timeInterval / (1000 * 60 * 60)) % 24).toInt()
     val days = (timeInterval / (1000 * 60 * 60 * 24)).toInt()
-    return String.format(
-        Locale.getDefault(),
-        "%02dд.%02dч.%02dмин.",
-        days,
-        hours,
-        minutes
-    )
 
+    when {
+        timeInterval < 86400000 -> {
+            return String.format(
+                Locale.getDefault(),
+                "%02dч.%02dмин.",
+                hours,
+                minutes
+            )
+        }
+        timeInterval < 3600000 -> {
+            return String.format(
+                Locale.getDefault(),
+                "%02dмин.",
+                minutes
+            )
+        }
+        else -> {
+            return String.format(
+                Locale.getDefault(),
+                "%02dд.%02dч.%02dмин.",
+                days,
+                hours,
+                minutes
+            )
+        }
+    }
 }
