@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Покорми питомца</string>
     <string name="pet_fed">Питомец накормлен</string>
-    <string name="time_before_feeding">Время до кормления:</string>
+    <string name="time_before_feeding">Осталось:</string>
     <string name="fake_time">01:32</string>
 
     <string name="pet_name_hint">Введите имя питомца</string>
@@ -19,9 +19,8 @@
     <string name="hours">Часы</string>
     <string name="minutes">Минуты</string>
     <string name="choose_pet_photo">Выберите фото питомца</string>
-    <string name="ok_button">Ok</string>
-    <string name="time_before_feeding">Время до кормления:</string>
-    <string name="feed_me_at">Покорми меня в:</string>
+    <string name="ok_button">OK</string>
+    <string name="feed_me_at">Покорми меня:</string>
 
 
 </resources>

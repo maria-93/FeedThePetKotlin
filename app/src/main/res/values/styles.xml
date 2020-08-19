@@ -19,7 +19,7 @@
 </style>
 
     <style name="AccentActionButton" parent="Theme.AppCompat.Light">
-        <item name="colorSecondary">#51a5a7</item>
+        <item name="colorSecondary">#006B85</item>
         <item name="colorOnSecondary">#FFFFFF</item>
 
     </style>

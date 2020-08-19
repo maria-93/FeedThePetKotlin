@@ -54,7 +54,7 @@ fun getFormattedTime(timeInterval: Long): String {
         timeInterval < 86400000 -> {
             return String.format(
                 Locale.getDefault(),
-                "%02dч.%02dмин.",
+                "%02dч. %02dм.",
                 hours,
                 minutes
             )
@@ -62,14 +62,14 @@ fun getFormattedTime(timeInterval: Long): String {
         timeInterval < 3600000 -> {
             return String.format(
                 Locale.getDefault(),
-                "%02dмин.",
+                "%02dм.",
                 minutes
             )
         }
         else -> {
             return String.format(
                 Locale.getDefault(),
-                "%02dд.%02dч.%02dмин.",
+                "%02dд. %02dч. %02dм.",
                 days,
                 hours,
                 minutes

@@ -9,10 +9,11 @@
 
     <color name="black">#000000</color>
     <color name="red">#D81333</color>
-    <color name="grey">#B3B3B3</color>
-    <color name="lightGrey">#E1E1E1</color>
+    <color name="grey">#AEAEAE</color>
+    <color name="lightGrey">#EFEFEF</color>
 
     <color name="background">#E6E6E6</color>
     <color name="backgroundRecyclerView">#FFF5E5</color>
+    <color name="backgroundRecyclerViewDarker">#FDF0DA</color>
 
 </resources>
