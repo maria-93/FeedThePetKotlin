@@ -8,28 +8,45 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorOnPrimary">@color/colorPrimaryLight</item>
         <item name="colorAccent">@color/colorAccent</item>
-
-
     </style>
-    
-    <style name="PrimaryActionButton" parent="Theme.AppCompat.Light">
-    <item name="colorSecondary">@color/colorPrimary</item>
-    <item name="colorOnSecondary">@color/colorAccentDark</item>
 
-</style>
+    <style name="PrimaryActionButton" parent="Theme.AppCompat.Light">
+        <item name="colorSecondary">@color/colorPrimary</item>
+        <item name="colorOnSecondary">@color/colorAccentDark</item>
+    </style>
 
     <style name="AccentActionButton" parent="Theme.AppCompat.Light">
-        <item name="colorSecondary">#006B85</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
         <item name="colorOnSecondary">#FFFFFF</item>
+    </style>
 
+    <style name="AlertDialogCustom" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:background">@android:color/white</item>
+        <item name="colorPrimary">@color/colorSecondary</item>
+        <item name="buttonBarButtonStyle">@style/BaseButtonBarStyle</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/PositiveButtonBarStyle</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/NegativeButtonBarStyle</item>
+
+    </style>
+
+    <style name="BaseButtonBarStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textColor">@android:color/white</item>
+
+    </style>
+
+    <style name="NegativeButtonBarStyle" parent="BaseButtonBarStyle">
+        <item name="android:layout_marginEnd">16dp</item>
+    </style>
+
+    <style name="PositiveButtonBarStyle" parent="BaseButtonBarStyle">
     </style>
 
 
 
-    <style name="ColorForButton">
-        <item name="colorPrimary">@color/colorAccentDark</item>
 
-
-    </style>
 
 </resources>

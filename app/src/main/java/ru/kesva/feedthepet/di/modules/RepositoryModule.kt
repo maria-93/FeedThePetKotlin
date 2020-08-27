@@ -2,13 +2,13 @@ package ru.kesva.feedthepet.di.modules
 
 import dagger.Binds
 import dagger.Module
-import ru.kesva.feedthepet.domain.repository.Repository
 import ru.kesva.feedthepet.data.repository.RepositoryImpl
+import ru.kesva.feedthepet.domain.repository.Repository
 
 @Module
 abstract class RepositoryModule {
 
     @Binds
-    abstract fun provideRepository(repositoryImpl: RepositoryImpl): Repository
+    abstract fun bindRepository(repositoryImpl: RepositoryImpl): Repository
 
 }

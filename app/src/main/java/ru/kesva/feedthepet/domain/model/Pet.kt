@@ -2,6 +2,7 @@ package ru.kesva.feedthepet.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "petData")
 class Pet(
@@ -11,7 +12,7 @@ class Pet(
     var timeInterval: Long,
     var petImageURI: String,
     var timeInFuture: Long
-) {
+): Serializable {
 
 
     fun getCopy() = Pet(

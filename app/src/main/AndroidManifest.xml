@@ -13,7 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <receiver android:name=".service.AlertReceiver" />
+        <receiver android:name=".service.AlertReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="ru.kesva.feedthepet.FEED_PET"/>
+            </intent-filter>
+        </receiver>
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".service.NotificationService"/>
     </application>
 
 </manifest>

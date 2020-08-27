@@ -17,6 +17,7 @@ import ru.kesva.feedthepet.di.subcomponents.StartComponent
 import ru.kesva.feedthepet.domain.model.Pet
 import ru.kesva.feedthepet.extensions.getViewModel
 import ru.kesva.feedthepet.ui.MainActivity
+import ru.kesva.feedthepet.ui.dialogfragment.DeletePetDialogFragment
 import ru.kesva.feedthepet.ui.viewmodel.PetViewModel
 import javax.inject.Inject
 
@@ -41,7 +42,6 @@ class StartFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         injectDependencies()
-
     }
 
     override fun onCreateView(
@@ -89,7 +89,18 @@ class StartFragment : Fragment() {
 
             petFedButtonClicked.observe(viewLifecycleOwner, Observer {
             })
+
+            alertDialogInitiated.observe(viewLifecycleOwner, Observer {
+                it.getContentIfNotHandled()?.let { _ ->
+                    showAlertDialog()
+                }
+            })
         }
+    }
+
+    private fun showAlertDialog() {
+        val dialogFragment = DeletePetDialogFragment()
+        dialogFragment.show(childFragmentManager, "Show")
     }
 
 

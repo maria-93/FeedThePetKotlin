@@ -1,9 +1,10 @@
 package ru.kesva.feedthepet.di
 
 import dagger.Module
-import ru.kesva.feedthepet.di.subcomponents.AddNewPetComponent
-import ru.kesva.feedthepet.di.subcomponents.MainActivityComponent
-import ru.kesva.feedthepet.di.subcomponents.StartComponent
+import ru.kesva.feedthepet.di.subcomponents.*
 
-@Module(subcomponents = [StartComponent::class, AddNewPetComponent::class, MainActivityComponent::class])
+@Module(
+    subcomponents = [StartComponent::class, AddNewPetComponent::class,
+        MainActivityComponent::class, AlertReceiverComponent::class, NotificationServiceComponent::class]
+)
 class AppSubComponents

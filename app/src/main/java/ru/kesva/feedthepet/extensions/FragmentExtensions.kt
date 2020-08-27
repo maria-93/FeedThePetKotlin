@@ -24,3 +24,6 @@ inline fun <reified T : ViewModel> Fragment.getViewModel(): T {
     return ViewModelProvider(this)[T::class.java]
 }
 
+inline fun <reified T : ViewModel> Fragment.getViewModel(owner: ViewModelStoreOwner): T {
+    return ViewModelProvider(owner)[T::class.java]
+}

@@ -20,6 +20,7 @@
             name="timer"
             type="ru.kesva.feedthepet.MyCountDownTimer" />
 
+
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -45,6 +46,7 @@
                 android:text="@{pet.petName}"
                 android:textColor="@color/black"
                 android:textSize="24sp"
+                android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="@+id/petImageRv"
                 app:layout_constraintStart_toStartOf="@+id/petImageRv"
                 app:layout_constraintTop_toBottomOf="@+id/petImageRv"
@@ -140,7 +142,7 @@
                 android:layout_marginTop="8dp"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/feed_me_at"
                 app:layout_constraintTop_toBottomOf="@+id/tvremaintime"
                 app:textForNextFeeding="@{pet}"
@@ -155,8 +157,9 @@
                 android:text="@string/feed_me_at"
                 android:textColor="@color/black"
                 android:textSize="16sp"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintEnd_toStartOf="@+id/tv_next_feeding"
-                app:layout_constraintStart_toStartOf="@+id/linearLayout"
+                app:layout_constraintStart_toEndOf="@+id/petImageRv"
                 app:layout_constraintTop_toBottomOf="@+id/tvremaintime" />
 
 

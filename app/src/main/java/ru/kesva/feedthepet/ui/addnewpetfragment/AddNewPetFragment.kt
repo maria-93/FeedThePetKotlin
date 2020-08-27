@@ -43,6 +43,8 @@ class AddNewPetFragment : Fragment() {
     private lateinit var pickerForHours: NumberPicker
     private lateinit var buffer: Buffer
 
+    private val FAKE_TIME: Long = 3000
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         injectDependency()
@@ -92,7 +94,8 @@ class AddNewPetFragment : Fragment() {
                 } else {
                     buffer.pet.petName = name
                     var time = getTotalTime(daysInMs, hoursInMs, minutesInMs)
-                    buffer.pet.timeInterval = time
+
+                    buffer.pet.timeInterval = FAKE_TIME
                     clickHandler.onOkButtonClicked()
                     val navController =
                         NavHostFragment.findNavController(this)

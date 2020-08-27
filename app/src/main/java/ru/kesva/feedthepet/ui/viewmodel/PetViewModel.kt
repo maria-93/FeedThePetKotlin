@@ -1,6 +1,6 @@
 package ru.kesva.feedthepet.ui.viewmodel
 
-import android.util.Log
+import android.content.DialogInterface
 import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,10 +12,13 @@ import ru.kesva.feedthepet.data.model.Buffer
 import ru.kesva.feedthepet.data.model.Event
 import ru.kesva.feedthepet.data.model.PetDataAction
 import ru.kesva.feedthepet.domain.model.Pet
+import ru.kesva.feedthepet.domain.repository.AlarmRepository
 import ru.kesva.feedthepet.domain.repository.Repository
 import ru.kesva.feedthepet.domain.usecases.AddNewPetUseCase
 import ru.kesva.feedthepet.domain.usecases.DeletePetUseCase
+import ru.kesva.feedthepet.domain.usecases.MakePetFedUseCase
 import ru.kesva.feedthepet.domain.usecases.UpdatePetUseCase
+import ru.kesva.feedthepet.getRemainTime
 import ru.kesva.feedthepet.ui.addnewpetfragment.PetCreationClickHandler
 import ru.kesva.feedthepet.ui.startfragment.PetAdapter
 import java.util.*
@@ -25,10 +28,15 @@ class PetViewModel @Inject constructor(
     private val addNewPetUseCase: AddNewPetUseCase,
     private val updatePetUseCase: UpdatePetUseCase,
     private val deletePetUseCase: DeletePetUseCase,
-    private val repositoryImpl: Repository
+    private val makePetFedUseCase: MakePetFedUseCase,
+    private val repository: Repository,
+    private val alarmRepository: AlarmRepository
 ) : ViewModel(), PetAdapter.AdapterClickHandler, PetCreationClickHandler {
 
     private lateinit var buffer: Buffer
+
+    private val _alertDialogInitiated: MutableLiveData<Event<Pet>> = MutableLiveData()
+    val alertDialogInitiated: LiveData<Event<Pet>> = _alertDialogInitiated
 
     private val _createNewPet: MutableLiveData<Event<Any>> = MutableLiveData()
     val createNewPet: LiveData<Event<Any>> = _createNewPet
@@ -43,7 +51,7 @@ class PetViewModel @Inject constructor(
     val editButtonClicked: LiveData<Event<Any>> = _editButtonClicked
 
     val allPetLive: LiveData<List<Pet>>
-        get() = repositoryImpl.getAllPetData()
+        get() = repository.getAllPetData()
 
 
     fun createPet() {
@@ -65,23 +73,14 @@ class PetViewModel @Inject constructor(
         myCountDownTimer: MyCountDownTimer,
         remainTimeTextView: TextView
     ) {
-        Log.d("Timer", "petFedButtonClicked: ")
-        var timeInFuture = System.currentTimeMillis() + pet.timeInterval
-        pet.timeInFuture = timeInFuture
         viewModelScope.launch {
-            repositoryImpl.update(pet)
+            makePetFedUseCase(pet)
+            myCountDownTimer.start(getRemainTime(pet.timeInFuture))
         }
-        var remainTime = timeInFuture - System.currentTimeMillis()
-        Log.d("Timer", "petFedButtonClicked: животное ${pet.petName} с интервалом $remainTime")
-        myCountDownTimer.start(remainTime)
-        repositoryImpl.registerAndStartAlarm(pet.id, timeInFuture)
-
-        _petFedButtonClicked.value = Event(Any())
-
     }
 
     override fun cancelAlarmButtonClicked(pet: Pet) {
-        repositoryImpl.cancelAlarm(pet.id)
+        alarmRepository.cancelAlarm(pet)
     }
 
     override fun editButtonClicked(pet: Pet) {
@@ -93,6 +92,10 @@ class PetViewModel @Inject constructor(
     }
 
     override fun deleteButtonClicked(pet: Pet) {
+     _alertDialogInitiated.value = Event(pet)
+    }
+
+    fun positiveButtonClick(pet: Pet) = { _: DialogInterface, _: Int ->
         viewModelScope.launch {
             deletePetUseCase.deletePet(pet)
         }
@@ -102,8 +105,6 @@ class PetViewModel @Inject constructor(
                     pet.id, pet.petName, pet.timeInterval, pet.petImageURI, pet.timeInFuture
                 )
             )
-
-
     }
 
     override fun onOkButtonClicked() {
@@ -120,7 +121,6 @@ class PetViewModel @Inject constructor(
         calendar.timeInMillis = 0
         return Pet(0, "", 0, "", 0)
     }
-
 
 }
 

@@ -77,3 +77,7 @@ fun getFormattedTime(timeInterval: Long): String {
         }
     }
 }
+
+fun getRemainTime(timeInFuture: Long): Long {
+    return timeInFuture - System.currentTimeMillis()
+}
