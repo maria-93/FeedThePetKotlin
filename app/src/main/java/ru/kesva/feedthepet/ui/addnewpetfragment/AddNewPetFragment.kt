@@ -28,7 +28,6 @@ import javax.inject.Inject
  */
 const val PICK_IMAGE = 1
 
-//TODO вынести использование буффера в отдельный юзкейс, реализовать удаление, инжектить addnewpetfragment
 class AddNewPetFragment : Fragment() {
     private lateinit var binding: FragmentAddNewPetBinding
     private lateinit var component: AddNewPetComponent
@@ -42,8 +41,6 @@ class AddNewPetFragment : Fragment() {
     private lateinit var pickerForDays: NumberPicker
     private lateinit var pickerForHours: NumberPicker
     private lateinit var buffer: Buffer
-
-    private val FAKE_TIME: Long = 3000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +63,7 @@ class AddNewPetFragment : Fragment() {
         binding.petData = buffer.pet
 
 
-        petName.setOnKeyListener(View.OnKeyListener { view, keyCode, keyEvent ->
+        petName.setOnKeyListener(View.OnKeyListener { _, keyCode, keyEvent ->
             if (keyEvent.action == KeyEvent.ACTION_DOWN &&
                 (keyCode == KeyEvent.KEYCODE_ENTER)
             ) {
@@ -93,9 +90,8 @@ class AddNewPetFragment : Fragment() {
                     showToastTimeMustBeAboveZero()
                 } else {
                     buffer.pet.petName = name
-                    var time = getTotalTime(daysInMs, hoursInMs, minutesInMs)
-
-                    buffer.pet.timeInterval = FAKE_TIME
+                    val time = getTotalTime(daysInMs, hoursInMs, minutesInMs)
+                    buffer.pet.timeInterval = time
                     clickHandler.onOkButtonClicked()
                     val navController =
                         NavHostFragment.findNavController(this)
