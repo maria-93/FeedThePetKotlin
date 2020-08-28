@@ -20,6 +20,11 @@
         <item name="colorOnSecondary">#FFFFFF</item>
     </style>
 
+    <style name="OkButton" parent="AppTheme">
+        <item name="colorPrimary">@color/colorSecondary</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+    </style>
+
     <style name="AlertDialogCustom" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
         <item name="android:textStyle">normal</item>
         <item name="android:textColorPrimary">@color/black</item>
