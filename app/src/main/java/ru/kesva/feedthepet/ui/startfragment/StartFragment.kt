@@ -63,7 +63,7 @@ class StartFragment : Fragment() {
 
     private fun subscribeToEvents() {
         with(viewModel) {
-            allPetLive.observe(viewLifecycleOwner, Observer {
+            allPetLiveData.observe(viewLifecycleOwner, Observer {
                 adapter.petList = it as MutableList<Pet>
 
             })

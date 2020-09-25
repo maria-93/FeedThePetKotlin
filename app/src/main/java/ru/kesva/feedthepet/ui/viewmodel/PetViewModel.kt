@@ -21,7 +21,6 @@ import ru.kesva.feedthepet.domain.usecases.UpdatePetUseCase
 import ru.kesva.feedthepet.getRemainTime
 import ru.kesva.feedthepet.ui.addnewpetfragment.PetCreationClickHandler
 import ru.kesva.feedthepet.ui.startfragment.PetAdapter
-import java.util.*
 import javax.inject.Inject
 
 class PetViewModel @Inject constructor(
@@ -50,7 +49,7 @@ class PetViewModel @Inject constructor(
     private val _editButtonClicked: MutableLiveData<Event<Any>> = MutableLiveData()
     val editButtonClicked: LiveData<Event<Any>> = _editButtonClicked
 
-    val allPetLive: LiveData<List<Pet>>
+    val allPetLiveData: LiveData<List<Pet>>
         get() = repository.getAllPetData()
 
 
@@ -117,8 +116,6 @@ class PetViewModel @Inject constructor(
     }
 
     private fun getNewPet(): Pet {
-        val calendar: Calendar = Calendar.getInstance()
-        calendar.timeInMillis = 0
         return Pet(0, "", 0, "", 0)
     }
 
