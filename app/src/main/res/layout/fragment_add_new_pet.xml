@@ -2,9 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
-            name="petData"
+            name="pet"
             type="ru.kesva.feedthepet.domain.model.Pet" />
 
         <variable
@@ -12,116 +14,134 @@
             type="ru.kesva.feedthepet.ui.addnewpetfragment.PetCreationClickHandler" />
     </data>
 
-    <ScrollView
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@+id/petImage"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".ui.addnewpetfragment.AddNewPetFragment">
+
+        <EditText
+            android:id="@+id/et_choose_pet_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:ems="10"
+            android:hint="@string/pet_name_hint"
+            android:imeOptions="actionDone"
+            android:inputType="textCapWords"
+            android:maxLength="80"
+            android:maxLines="1"
+            android:text="@{pet.petName}"
+            app:layout_constraintBottom_toTopOf="@+id/tv_choose_time_for_feed"
+            app:layout_constraintEnd_toEndOf="@+id/petImage"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/petImage"
+            app:layout_constraintTop_toBottomOf="@+id/petImage" />
+
+        <ImageView
+            android:id="@+id/petImage"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_margin="16dp"
+            android:background="@android:color/transparent"
+            android:scaleType="center"
+            android:src="@drawable/add_a_photo"
+            app:layout_constraintBottom_toTopOf="@+id/et_choose_pet_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_choose_time_for_feed"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/feeding_time_hint"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/numberPickerLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_choose_pet_name" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+            android:id="@+id/numberPickerLayout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:context=".ui.addnewpetfragment.AddNewPetFragment">
-
-            <EditText
-                android:id="@+id/et_choose_pet_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:ems="10"
-                android:hint="@string/pet_name_hint"
-                android:imeOptions="actionDone"
-                android:inputType="textCapWords"
-                android:maxLength="80"
-                android:maxLines="1"
-                android:text="@{petData.petName}"
-                app:layout_constraintEnd_toEndOf="@+id/petImage"
-                app:layout_constraintStart_toStartOf="@+id/petImage"
-                app:layout_constraintTop_toBottomOf="@+id/petImage" />
-
-            <ImageView
-                android:id="@+id/petImage"
-                android:layout_width="140dp"
-                android:layout_height="140dp"
-                android:layout_margin="8dp"
-                android:background="@android:color/transparent"
-                android:scaleType="center"
-                android:src="@drawable/add_a_photo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/time_picked" />
-
-            <TextView
-                android:id="@+id/tv_choose_time_for_feed"
-                style="@style/TextAppearance.AppCompat.Body2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="@string/feeding_time_hint"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="@+id/time_picked"
-                app:layout_constraintStart_toStartOf="@+id/time_picked"
-                app:layout_constraintTop_toBottomOf="@+id/et_choose_pet_name" />
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/button_ok"
+            app:layout_constraintEnd_toEndOf="@+id/tv_choose_time_for_feed"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/tv_choose_time_for_feed"
+            app:layout_constraintTop_toBottomOf="@+id/tv_choose_time_for_feed">
 
             <NumberPicker
                 android:id="@+id/number_picker_hours"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/number_picker_days"/>
+                app:layout_constraintStart_toStartOf="parent" />
 
             <NumberPicker
                 android:id="@+id/number_picker_days"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_weight="1"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/number_picker_hours"
-                app:layout_constraintTop_toTopOf="@+id/number_picker_hours" />
+                app:layout_constraintLeft_toRightOf="@id/number_picker_hours"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <NumberPicker
                 android:id="@+id/number_picker_minutes"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
-                app:layout_constraintStart_toEndOf="@+id/number_picker_hours"
-                app:layout_constraintTop_toTopOf="@+id/number_picker_hours"
+                android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:focusable="true"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/number_picker_hours" />
 
             <TextView
                 android:id="@+id/tv_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/days"
                 android:layout_marginTop="20dp"
+                android:text="@string/days"
                 app:layout_constraintBottom_toTopOf="@+id/number_picker_days"
                 app:layout_constraintEnd_toEndOf="@+id/number_picker_days"
-                app:layout_constraintStart_toStartOf="@+id/number_picker_days"
-                app:layout_constraintTop_toBottomOf="@id/tv_choose_time_for_feed"/>
+                app:layout_constraintStart_toStartOf="@+id/number_picker_days" />
 
             <TextView
                 android:id="@+id/tv_hour"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hours"
                 android:layout_marginTop="20dp"
+                android:text="@string/hours"
                 app:layout_constraintBottom_toTopOf="@+id/number_picker_hours"
                 app:layout_constraintEnd_toEndOf="@+id/number_picker_hours"
-                app:layout_constraintStart_toStartOf="@+id/number_picker_hours"
-                app:layout_constraintTop_toBottomOf="@id/tv_choose_time_for_feed"/>
+                app:layout_constraintStart_toStartOf="@+id/number_picker_hours" />
 
             <TextView
                 android:id="@+id/tv_minute"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/minutes"
                 android:layout_marginTop="20dp"
+                android:text="@string/minutes"
                 app:layout_constraintBottom_toTopOf="@+id/number_picker_minutes"
                 app:layout_constraintEnd_toEndOf="@+id/number_picker_minutes"
-                app:layout_constraintStart_toStartOf="@+id/number_picker_minutes"
-                app:layout_constraintTop_toBottomOf="@id/tv_choose_time_for_feed"/>
+                app:layout_constraintStart_toStartOf="@+id/number_picker_minutes" />
 
             <TextView
                 android:id="@+id/time_picked"
@@ -130,23 +150,25 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/choose_pet_photo"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
-
-            <Button
-                android:id="@+id/button_ok"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/ok_button"
-                android:theme="@style/OkButton"
-                app:layout_constraintEnd_toEndOf="@+id/number_picker_minutes"
-                app:layout_constraintStart_toStartOf="@+id/number_picker_days"
-                app:layout_constraintTop_toBottomOf="@+id/number_picker_hours" />
-
-
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+
+        <Button
+            android:id="@+id/button_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/ok_button"
+            android:theme="@style/OkButton"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/numberPickerLayout"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/numberPickerLayout"
+            app:layout_constraintTop_toBottomOf="@+id/numberPickerLayout" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

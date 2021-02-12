@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-@Entity(tableName = "petData")
+@Entity(tableName = "pets")
 class Pet(
     @PrimaryKey(autoGenerate = true)
     var id: Int,

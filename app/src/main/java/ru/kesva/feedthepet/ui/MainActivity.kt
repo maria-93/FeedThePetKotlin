@@ -16,14 +16,12 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var factory: ViewModelFactory
 
-    @Inject
     lateinit var viewModel: PetViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         injectDependencies()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
     }
 
     private fun injectDependencies() {

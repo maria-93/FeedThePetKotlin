@@ -12,6 +12,7 @@ fun hideKeyBoard(activity: Activity) {
         inputMethodManager.hideSoftInputFromWindow(
             activity.window.decorView.windowToken, 0
         )
+        inputMethodManager.showSoftInput(activity.window.decorView, 0)
     } else {
         throw UnsupportedOperationException("Can't show keyboard. Activity's window is null")
     }

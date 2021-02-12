@@ -7,14 +7,6 @@
     <variable
         name="viewModel"
         type="ru.kesva.feedthepet.ui.viewmodel.PetViewModel" />
-
-        <variable
-            name="pet"
-            type="ru.kesva.feedthepet.domain.model.Pet" />
-
-        <variable
-            name="timer"
-            type="ru.kesva.feedthepet.MyCountDownTimer" />
     </data>
 
 <FrameLayout

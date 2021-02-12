@@ -5,7 +5,7 @@ import androidx.room.*
 import ru.kesva.feedthepet.domain.model.Pet
 
 @Dao
-interface PetDataDao {
+interface PetDao {
     /**
      * Изменить существующую запись о животном в БД
      */
@@ -30,19 +30,19 @@ interface PetDataDao {
     /**
      * Удалить записи обо всех животных из БД
      */
-    @Query("DELETE FROM petData")
+    @Query("DELETE FROM pets")
     suspend fun deleteAllPetData()
 
     /**
      * Выбрать животное из БД по id
      */
-    @Query("SELECT * FROM petData WHERE id = :id")
+    @Query("SELECT * FROM pets WHERE id = :id")
     suspend fun getById(id: Int): Pet
 
     /**
      * Возвращает список всех животных, обернутый в LiveData
      */
-    @Query("SELECT * FROM petData")
+    @Query("SELECT * FROM pets")
     fun getAllPetData(): LiveData<List<Pet>>
 
 

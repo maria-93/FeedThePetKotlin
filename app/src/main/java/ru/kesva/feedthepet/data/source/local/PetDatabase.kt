@@ -8,5 +8,5 @@ import ru.kesva.feedthepet.domain.model.Pet
 @Database(entities = [Pet::class], version = 1, exportSchema = false)
 @TypeConverters(CalendarConverter::class)
 abstract class PetDatabase : RoomDatabase() {
-    abstract fun petDataDao(): PetDataDao
+    abstract fun petDataDao(): PetDao
 }

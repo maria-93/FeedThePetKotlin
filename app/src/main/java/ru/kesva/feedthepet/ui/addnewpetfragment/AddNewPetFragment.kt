@@ -50,7 +50,7 @@ class AddNewPetFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAddNewPetBinding.inflate(inflater)
         return binding.root
     }
@@ -60,7 +60,7 @@ class AddNewPetFragment : Fragment() {
         setUpBinding()
         binding.clickHandler = clickHandler
         buffer = clickHandler.getBuffer()
-        binding.petData = buffer.pet
+        binding.pet = buffer.pet
 
 
         petName.setOnKeyListener(View.OnKeyListener { _, keyCode, keyEvent ->
