@@ -21,7 +21,6 @@ import javax.inject.Inject
 const val NOTIFICATION_CHANNEL_ID = "notification_channel"
 const val STARTING_ACTIVITY_PENDING_INTENT_ID = 100
 const val PET_FED_INTENT_ACTION = "pet_fed"
-const val PET_WAS_FED_ACTION = "pet_was_fed"
 const val ACTION_PENDING_INTENT_ID = 200
 
 const val PET_NAME = "pet_name"
@@ -162,7 +161,10 @@ class AlarmRepositoryImpl @Inject constructor(@ApplicationContext private val co
             putString(PET_IMAGE_URI, pet.petImageURI)
             putLong(PET_FUTURE_TIME, pet.timeInFuture)
         }
-        Log.d("AlertReceiver", "actionIntent in sendNotification: ${pet.id} ${pet.petName} ${pet.timeInterval}")
+        Log.d(
+            "AlertReceiver",
+            "actionIntent in sendNotification: ${pet.id} ${pet.petName} ${pet.timeInterval}"
+        )
         val actionIntent = Intent(context, NotificationService::class.java).apply {
             action = PET_FED_INTENT_ACTION
             putExtra(ACTION_BUNDLE, actionBundle)

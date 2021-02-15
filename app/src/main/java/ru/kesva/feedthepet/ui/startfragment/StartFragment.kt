@@ -115,19 +115,19 @@ class StartFragment : Fragment() {
     }
 
     override fun onPause() {
-        super.onPause()
         adapter.stopTimers()
+        super.onPause()
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         adapter.stopTimers()
+        super.onDestroy()
 
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         adapter.stopTimers()
+        super.onDestroyView()
     }
 
 

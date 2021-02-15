@@ -49,6 +49,7 @@
             android:background="@android:color/transparent"
             android:scaleType="center"
             android:src="@drawable/add_a_photo"
+            app:loadImage="@{pet.petImageURI}"
             app:layout_constraintBottom_toTopOf="@+id/et_choose_pet_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

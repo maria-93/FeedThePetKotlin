@@ -1,5 +1,6 @@
 package ru.kesva.feedthepet.service
 
+import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -28,6 +29,7 @@ class AlertReceiver : BroadcastReceiver() {
         if (intent.action == FEED_THE_PET_ACTION) {
             onFeedPetBroadcastReceive(intent)
         }
+
     }
 
     private fun onFeedPetBroadcastReceive(intent: Intent) {

@@ -1,6 +1,7 @@
 package ru.kesva.feedthepet.service
 
 import android.app.IntentService
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -44,8 +45,14 @@ class NotificationService : IntentService("notification_service") {
             }
             myCountDownTimer = MyCountDownTimer()
             myCountDownTimer.start(getRemainTime(pet.timeInFuture))
+
+            val notificationManager =
+                applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.cancelAll()
         }
     }
+
+
 
     private fun injectDependency(context: Context) {
         component =
