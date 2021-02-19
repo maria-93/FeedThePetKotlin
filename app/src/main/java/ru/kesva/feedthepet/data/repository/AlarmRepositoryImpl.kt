@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import ru.kesva.feedthepet.R
@@ -47,32 +46,24 @@ class AlarmRepositoryImpl @Inject constructor(@ApplicationContext private val co
             )
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent)
-            //startAlarmShowToast()
+            Log.d("Test!", "alarmRepository: start alarm for pet ${pet.petName}")
         } else {
+            Log.d("Test!", "alarmRepository: start alarm for pet ${pet.petName}")
             alarmManager.setExactAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent
             )
-            //startAlarmShowToast()
-
         }
     }
 
-    private fun startAlarmShowToast() {
-        Toast.makeText(context, "Будильник запущен", Toast.LENGTH_SHORT).show()
-    }
+
 
     override fun cancelAlarm(pet: Pet) {
         val alarmManager =
             context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val pendingIntent = getPendingIntentForCancel(context, pet)
+        Log.d("Test!", "alarmRepository: cancel alarm for pet ${pet.petName}")
         alarmManager.cancel(pendingIntent)
-        cancelAlarmShowToast()
     }
-
-    private fun cancelAlarmShowToast() {
-        Toast.makeText(context, "Будильник остановлен", Toast.LENGTH_SHORT).show()
-    }
-
 
     private fun getPendingIntentForNotification(
         context: Context,
@@ -103,6 +94,7 @@ class AlarmRepositoryImpl @Inject constructor(@ApplicationContext private val co
         pet: Pet
     ): PendingIntent {
         val intent = Intent(context, AlertReceiver::class.java)
+        intent.action = AlertReceiver.FEED_THE_PET_ACTION
         return PendingIntent.getBroadcast(
             context,
             pet.id,
