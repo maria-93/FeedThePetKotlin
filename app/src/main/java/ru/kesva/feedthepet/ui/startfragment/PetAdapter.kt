@@ -111,6 +111,7 @@ class PetDataViewHolder @Inject constructor(
     private fun setListeners(pet: Pet) {
         timer.onTickListener = {
             Log.d("Timer", "onTickListener: $it животного ${pet.petName}")
+            Log.d("ThreadTest", "setListeners: name ${Thread.currentThread().name}")
             tvForTimer.text = getFormattedTime(it)
         }
     }

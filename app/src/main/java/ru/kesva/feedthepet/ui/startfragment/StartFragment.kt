@@ -1,9 +1,11 @@
 package ru.kesva.feedthepet.ui.startfragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -47,7 +49,7 @@ class StartFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentStartBinding.inflate(inflater)
         binding.recyclerView.adapter = adapter
         binding.viewModel = viewModel
@@ -88,6 +90,17 @@ class StartFragment : Fragment() {
             })
 
             petFedButtonClicked.observe(viewLifecycleOwner, Observer {
+                it.getContentIfNotHandled()?.let { _ ->
+                    Log.d("Test!", "subscribeToEvents: start Alarm Toast")
+                    startAlarmShowToast()
+                }
+            })
+
+            cancelAlarmButtonClicked.observe(viewLifecycleOwner, Observer {
+                it.getContentIfNotHandled()?.let {
+                    Log.d("Test!", "subscribeToEvents: cancel Alarm Toast")
+                    cancelAlarmShowToast()
+                }
             })
 
             alertDialogInitiated.observe(viewLifecycleOwner, Observer {
@@ -96,6 +109,14 @@ class StartFragment : Fragment() {
                 }
             })
         }
+    }
+
+    private fun startAlarmShowToast() {
+        Toast.makeText(context, "Будильник запущен", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun cancelAlarmShowToast() {
+        Toast.makeText(context, "Будильник остановлен", Toast.LENGTH_SHORT).show()
     }
 
     private fun showAlertDialog() {

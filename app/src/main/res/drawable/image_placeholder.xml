@@ -7,7 +7,7 @@
         android:drawable="@drawable/circle_placeholder" />
     <item
         android:id="@+id/paw_placeholder"
-        android:drawable="@drawable/paw_for_placeholder"
+        android:drawable="@drawable/add_a_photo"
         android:gravity="center" />
 
 </layer-list>

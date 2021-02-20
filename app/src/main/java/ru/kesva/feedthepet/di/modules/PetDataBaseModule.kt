@@ -10,12 +10,12 @@ import javax.inject.Singleton
 
 @Module
 class PetDatabaseModule {
-    private val databaseName = "PetDataBase.db"
+    private val databaseName = "DataBase.db"
 
     @Singleton
     @Provides
     fun providePetDatabase(@ApplicationContext context: Context): PetDatabase =
         //Room.inMemoryDatabaseBuilder(context, PetDatabase::class.java).build()
-        Room.databaseBuilder(context, PetDatabase::class.java, databaseName).build()
+        Room.databaseBuilder(context, PetDatabase::class.java, databaseName).fallbackToDestructiveMigration().build()
 
 }

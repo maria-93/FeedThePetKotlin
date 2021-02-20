@@ -8,6 +8,7 @@ class MyCountDownTimer {
     var onFinishListener: (() -> Unit)? = null
 
     fun start(fromTime: Long) {
+        stop()
         timer = object : CountDownTimer(fromTime, 1000) {
             override fun onFinish() {
                 onFinishListener?.invoke()

@@ -23,7 +23,6 @@ fun loadImage(imageView: ImageView, petImageUri: String) {
         .into(imageView)
 }
 
-
 @BindingAdapter("textForNextFeeding")
 fun textForNextFeeding(textView: TextView, pet: Pet) {
     val timeInFuture = pet.timeInFuture

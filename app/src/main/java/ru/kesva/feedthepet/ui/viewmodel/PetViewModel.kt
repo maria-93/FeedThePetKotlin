@@ -1,6 +1,7 @@
 package ru.kesva.feedthepet.ui.viewmodel
 
 import android.content.DialogInterface
+import android.util.Log
 import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,6 +19,7 @@ import ru.kesva.feedthepet.domain.usecases.AddNewPetUseCase
 import ru.kesva.feedthepet.domain.usecases.DeletePetUseCase
 import ru.kesva.feedthepet.domain.usecases.MakePetFedUseCase
 import ru.kesva.feedthepet.domain.usecases.UpdatePetUseCase
+import ru.kesva.feedthepet.getFormattedTime
 import ru.kesva.feedthepet.getRemainTime
 import ru.kesva.feedthepet.ui.addnewpetfragment.PetCreationClickHandler
 import ru.kesva.feedthepet.ui.startfragment.PetAdapter
@@ -37,17 +39,20 @@ class PetViewModel @Inject constructor(
     private val _alertDialogInitiated: MutableLiveData<Event<Pet>> = MutableLiveData()
     val alertDialogInitiated: LiveData<Event<Pet>> = _alertDialogInitiated
 
-    private val _createNewPet: MutableLiveData<Event<Any>> = MutableLiveData()
-    val createNewPet: LiveData<Event<Any>> = _createNewPet
+    private val _cancelAlarmButtonClicked: MutableLiveData<Event<Unit>> = MutableLiveData()
+    val cancelAlarmButtonClicked: LiveData<Event<Unit>> = _cancelAlarmButtonClicked
+
+    private val _createNewPet: MutableLiveData<Event<Unit>> = MutableLiveData()
+    val createNewPet: LiveData<Event<Unit>> = _createNewPet
 
     private val _deletePet: MutableLiveData<Event<Pet>> = MutableLiveData()
     val deletePet: LiveData<Event<Pet>> = _deletePet
 
-    private val _petFedButtonClicked: MutableLiveData<Event<Any>> = MutableLiveData()
-    val petFedButtonClicked: LiveData<Event<Any>> = _petFedButtonClicked
+    private val _petFedButtonClicked: MutableLiveData<Event<Unit>> = MutableLiveData()
+    val petFedButtonClicked: LiveData<Event<Unit>> = _petFedButtonClicked
 
-    private val _editButtonClicked: MutableLiveData<Event<Any>> = MutableLiveData()
-    val editButtonClicked: LiveData<Event<Any>> = _editButtonClicked
+    private val _editButtonClicked: MutableLiveData<Event<Unit>> = MutableLiveData()
+    val editButtonClicked: LiveData<Event<Unit>> = _editButtonClicked
 
     val allPetLiveData: LiveData<List<Pet>>
         get() = repository.getAllPetData()
@@ -59,7 +64,7 @@ class PetViewModel @Inject constructor(
             pet,
             PetDataAction.CREATE_PET
         )
-        _createNewPet.postValue(Event(Any()))
+        _createNewPet.postValue(Event(Unit))
 
     }
 
@@ -75,11 +80,14 @@ class PetViewModel @Inject constructor(
         viewModelScope.launch {
             makePetFedUseCase(pet)
             myCountDownTimer.start(getRemainTime(pet.timeInFuture))
+            _petFedButtonClicked.value = Event(Unit)
+            Log.d("Test!", "petFedButtonClicked: thread ${Thread.currentThread().name}")
         }
     }
 
     override fun cancelAlarmButtonClicked(pet: Pet) {
         alarmRepository.cancelAlarm(pet)
+        _cancelAlarmButtonClicked.value = Event(Unit)
     }
 
     override fun editButtonClicked(pet: Pet) {
@@ -87,7 +95,7 @@ class PetViewModel @Inject constructor(
             pet,
             PetDataAction.UPDATE_PET
         )
-        _editButtonClicked.value = Event(Any())
+        _editButtonClicked.value = Event(Unit)
     }
 
     override fun deleteButtonClicked(pet: Pet) {
@@ -106,11 +114,21 @@ class PetViewModel @Inject constructor(
             )
     }
 
-    override fun onOkButtonClicked() {
+    override fun onOkButtonClicked(pet: Pet) {
         viewModelScope.launch {
             when (buffer.petDataAction) {
                 PetDataAction.CREATE_PET -> addNewPetUseCase.addNewPet(buffer.pet)
-                PetDataAction.UPDATE_PET -> updatePetUseCase.updatePet(buffer.pet)
+                PetDataAction.UPDATE_PET -> {
+                    Log.d("Test!", "onOkButtonClicked: update branch")
+                    Log.d(
+                        "Test!", "onOkButtonClicked: ${
+                            getFormattedTime(pet.timeInterval)
+                        }"
+                    )
+                    alarmRepository.cancelAlarm(pet)
+                    Log.d("Test!", "onOkButtonClicked: cancelAlarm!")
+                    updatePetUseCase.updatePet(buffer.pet)
+                }
             }
         }
     }
