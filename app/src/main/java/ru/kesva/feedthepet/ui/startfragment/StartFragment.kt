@@ -97,8 +97,9 @@ class StartFragment : Fragment() {
             })
 
             cancelAlarmButtonClicked.observe(viewLifecycleOwner, Observer {
-                it.getContentIfNotHandled()?.let {
+                it.getContentIfNotHandled()?.let { pet ->
                     Log.d("Test!", "subscribeToEvents: cancel Alarm Toast")
+                    adapter.stopTimerForPet(pet)
                     cancelAlarmShowToast()
                 }
             })

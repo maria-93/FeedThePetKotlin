@@ -39,8 +39,8 @@ class PetViewModel @Inject constructor(
     private val _alertDialogInitiated: MutableLiveData<Event<Pet>> = MutableLiveData()
     val alertDialogInitiated: LiveData<Event<Pet>> = _alertDialogInitiated
 
-    private val _cancelAlarmButtonClicked: MutableLiveData<Event<Unit>> = MutableLiveData()
-    val cancelAlarmButtonClicked: LiveData<Event<Unit>> = _cancelAlarmButtonClicked
+    private val _cancelAlarmButtonClicked: MutableLiveData<Event<Pet>> = MutableLiveData()
+    val cancelAlarmButtonClicked: LiveData<Event<Pet>> = _cancelAlarmButtonClicked
 
     private val _createNewPet: MutableLiveData<Event<Unit>> = MutableLiveData()
     val createNewPet: LiveData<Event<Unit>> = _createNewPet
@@ -87,7 +87,7 @@ class PetViewModel @Inject constructor(
 
     override fun cancelAlarmButtonClicked(pet: Pet) {
         alarmRepository.cancelAlarm(pet)
-        _cancelAlarmButtonClicked.value = Event(Unit)
+        _cancelAlarmButtonClicked.value = Event(pet)
     }
 
     override fun editButtonClicked(pet: Pet) {

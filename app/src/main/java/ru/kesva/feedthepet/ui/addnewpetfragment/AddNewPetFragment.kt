@@ -18,6 +18,7 @@ import ru.kesva.feedthepet.data.model.Buffer
 import ru.kesva.feedthepet.databinding.FragmentAddNewPetBinding
 import ru.kesva.feedthepet.di.modules.ClickHandlersProvideModule
 import ru.kesva.feedthepet.di.subcomponents.AddNewPetComponent
+import ru.kesva.feedthepet.domain.model.Pet
 import ru.kesva.feedthepet.ui.MainActivity
 import javax.inject.Inject
 
@@ -91,8 +92,9 @@ class AddNewPetFragment : Fragment() {
                 } else {
                     buffer.pet.petName = name
                     val time = getTotalTime(daysInMs, hoursInMs, minutesInMs)
+                    //val fakeTime = writeFakeTime()
                     buffer.pet.timeInterval = time
-                    clickHandler.onOkButtonClicked()
+                    clickHandler.onOkButtonClicked(buffer.pet)
                     val navController =
                         NavHostFragment.findNavController(this)
                     navController.popBackStack()
@@ -188,9 +190,14 @@ class AddNewPetFragment : Fragment() {
         return daysInMs + hoursInMs + minutesInMs
     }
 
+    private fun writeFakeTime(): Long {
+        //10 секунд
+        return 10000
+    }
+
 }
 
 interface PetCreationClickHandler {
-    fun onOkButtonClicked()
+    fun onOkButtonClicked(pet: Pet)
     fun getBuffer(): Buffer
 }

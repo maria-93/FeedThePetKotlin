@@ -12,6 +12,7 @@ import ru.kesva.feedthepet.databinding.LayoutForRvBinding
 import ru.kesva.feedthepet.domain.model.Pet
 import ru.kesva.feedthepet.getFormattedTime
 import javax.inject.Inject
+import kotlin.concurrent.timer
 
 
 class PetAdapter @Inject constructor(
@@ -71,8 +72,20 @@ class PetAdapter @Inject constructor(
     }
 
     fun stopTimers() {
+        // у каждого животного может быть только 1 таймер.
+        // При создании новых животных все таймеры добавляются в set
+        // При вызове этого метода все таймеры будут остановлены.
         timerSet.forEach { it.stop() }
     }
+
+    fun stopTimerForPet(pet: Pet) {
+        val index = petList.indexOf(pet)
+        val timer = timerSet.elementAt(index)
+        Log.d("Tick", "stopTimerForPet: name ${pet.petName} index pet $index")
+        timer.stop()
+    }
+
+
 
 
 }
@@ -95,7 +108,7 @@ class PetDataViewHolder @Inject constructor(
         binding.timer = timer
 
         timerSet.add(timer)
-        Log.d("Timer", "bind: ${pet.petName} $this")
+        Log.d("Tick", "timer set size: ${timerSet.size}")
         tvForTimer.text = getFormattedTime(pet.timeInterval)
         setListeners(pet)
 
@@ -105,16 +118,16 @@ class PetDataViewHolder @Inject constructor(
     fun unbind(timerSet: MutableSet<MyCountDownTimer>) {
         timer.stop()
         timerSet.remove(timer)
-
     }
 
     private fun setListeners(pet: Pet) {
         timer.onTickListener = {
             Log.d("Timer", "onTickListener: $it животного ${pet.petName}")
-            Log.d("ThreadTest", "setListeners: name ${Thread.currentThread().name}")
             tvForTimer.text = getFormattedTime(it)
         }
     }
+
+
 
 
 }
