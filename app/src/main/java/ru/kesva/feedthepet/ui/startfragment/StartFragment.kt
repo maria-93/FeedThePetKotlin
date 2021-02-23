@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ru.kesva.feedthepet.FeedThePetApplication
 import ru.kesva.feedthepet.R
 import ru.kesva.feedthepet.databinding.FragmentStartBinding
@@ -30,6 +32,7 @@ class StartFragment : Fragment() {
     private lateinit var component: StartComponent
     private lateinit var navController: NavController
     private lateinit var binding: FragmentStartBinding
+    private lateinit var fab: FloatingActionButton
 
 
     @Inject
@@ -52,6 +55,16 @@ class StartFragment : Fragment() {
     ): View {
         binding = FragmentStartBinding.inflate(inflater)
         binding.recyclerView.adapter = adapter
+        fab = binding.fabButton
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy < 0 && fab.visibility == View.VISIBLE) {
+                    fab.hide()
+                } else if (dy > 0 && fab.visibility != View.VISIBLE) {
+                    fab.show()
+                }
+            }
+        })
         binding.viewModel = viewModel
         return binding.root
     }
@@ -70,9 +83,16 @@ class StartFragment : Fragment() {
 
             })
 
-            createNewPet.observe(viewLifecycleOwner, Observer {
-                it.getContentIfNotHandled()?.let {
+            createNewPet.observe(viewLifecycleOwner, Observer { event ->
+                event.getContentIfNotHandled()?.let {
                     navController.navigate(R.id.action_startFragment_to_addNewPetFragment)
+                    val timers = adapter.timerMap.values
+                    timers.forEach {
+                        Log.d("Tick", "subscribeToEvents: timer stopped")
+                        it.stop()
+                    }
+                    adapter.timerMap.clear()
+                    Log.d("Tick", "timer map cleared")
                 }
             })
 
@@ -137,17 +157,26 @@ class StartFragment : Fragment() {
     }
 
     override fun onPause() {
+        Log.d("Tick", "onPause: startFr")
         adapter.stopTimers()
         super.onPause()
     }
 
+    override fun onStop() {
+        Log.d("Tick", "onStop: startFr")
+        adapter.stopTimers()
+        super.onStop()
+    }
+
     override fun onDestroy() {
+        Log.d("Tick", "onDestroy: startFr")
         adapter.stopTimers()
         super.onDestroy()
 
     }
 
     override fun onDestroyView() {
+        Log.d("Tick", "onDestroyView: startFr")
         adapter.stopTimers()
         super.onDestroyView()
     }

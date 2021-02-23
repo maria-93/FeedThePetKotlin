@@ -117,7 +117,7 @@ class AlarmRepositoryImpl @Inject constructor(@ApplicationContext private val co
         val builder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
             .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
             .setSmallIcon(R.drawable.ic_action_name)
-            .setContentTitle("Покорми питомца!")
+            .setContentTitle("Покорми питомца ${pet.petName}!")
             .setContentText("Настало время покормить питомца")
             .setStyle(NotificationCompat.BigTextStyle().bigText("Настало время покормить питомца"))
             .setDefaults(Notification.DEFAULT_VIBRATE)

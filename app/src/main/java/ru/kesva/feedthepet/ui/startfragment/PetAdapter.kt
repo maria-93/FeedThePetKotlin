@@ -12,13 +12,12 @@ import ru.kesva.feedthepet.databinding.LayoutForRvBinding
 import ru.kesva.feedthepet.domain.model.Pet
 import ru.kesva.feedthepet.getFormattedTime
 import javax.inject.Inject
-import kotlin.concurrent.timer
 
 
 class PetAdapter @Inject constructor(
     private val adapterClickHandler: AdapterClickHandler
 ) : RecyclerView.Adapter<PetDataViewHolder>() {
-    var timerSet: MutableSet<MyCountDownTimer> = mutableSetOf()
+    var timerMap: MutableMap<Int, MyCountDownTimer> = mutableMapOf()
 
     var petList: MutableList<Pet> = mutableListOf()
         set(value) {
@@ -42,21 +41,29 @@ class PetAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: PetDataViewHolder, position: Int) {
         petList[position].let {
-            holder.bind(it, adapterClickHandler, timerSet)
+            holder.bind(it, adapterClickHandler, timerMap)
         }
 
     }
 
     override fun onViewRecycled(holder: PetDataViewHolder) {
         super.onViewRecycled(holder)
-        Log.d("Timer", "onViewRecycled: $holder")
-        holder.unbind(timerSet)
+        holder.unbind(timerMap)
+        Log.d("Tick", "onViewRecycled: $holder")
+
     }
 
     override fun onViewDetachedFromWindow(holder: PetDataViewHolder) {
         super.onViewDetachedFromWindow(holder)
-        Log.d("Timer", "onViewDetachedFromWindow: ")
-        holder.unbind(timerSet)
+        holder.unbind(timerMap)
+        Log.d("Tick", "onViewDetachedFromWindow: $holder")
+    }
+
+    override fun onViewAttachedToWindow(holder: PetDataViewHolder) {
+        super.onViewAttachedToWindow(holder)
+        holder.bind(petList[holder.adapterPosition], adapterClickHandler, timerMap)
+        Log.d("Tick", "onViewAttachedToWindow: $holder")
+
     }
 
     interface AdapterClickHandler {
@@ -73,21 +80,19 @@ class PetAdapter @Inject constructor(
 
     fun stopTimers() {
         // у каждого животного может быть только 1 таймер.
-        // При создании новых животных все таймеры добавляются в set
+        // При создании новых животных все таймеры добавляются в map
         // При вызове этого метода все таймеры будут остановлены.
-        timerSet.forEach { it.stop() }
+        timerMap.forEach { entry ->
+            val timer = entry.value
+            timer.stop()
+        }
     }
 
     fun stopTimerForPet(pet: Pet) {
-        val index = petList.indexOf(pet)
-        val timer = timerSet.elementAt(index)
-        Log.d("Tick", "stopTimerForPet: name ${pet.petName} index pet $index")
-        timer.stop()
+        val timer = timerMap[pet.id]
+        timer?.stop()
+        Log.d("Tick", "stopTimerForPet: name ${pet.petName} id pet ${pet.id}")
     }
-
-
-
-
 }
 
 class PetDataViewHolder @Inject constructor(
@@ -95,40 +100,46 @@ class PetDataViewHolder @Inject constructor(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private val tvForTimer: TextView = binding.tvremaintime
-    private val timer: MyCountDownTimer = MyCountDownTimer()
+    private var timer: MyCountDownTimer = MyCountDownTimer()
 
 
     fun bind(
         pet: Pet,
         adapterClickHandler: PetAdapter.AdapterClickHandler,
-        timerSet: MutableSet<MyCountDownTimer>
+        timerMap: MutableMap<Int, MyCountDownTimer>
     ) {
         binding.pet = pet
         binding.adapterClickHandler = adapterClickHandler
         binding.timer = timer
 
-        timerSet.add(timer)
-        Log.d("Tick", "timer set size: ${timerSet.size}")
+        if (timerMap.containsKey(pet.id)) {
+            //do nothing
+        } else {
+            Log.d("Tick", "bind: timer $timer")
+            timerMap[pet.id] = timer
+        }
         tvForTimer.text = getFormattedTime(pet.timeInterval)
-        setListeners(pet)
+
+
+        setListeners()
 
         binding.executePendingBindings()
     }
 
-    fun unbind(timerSet: MutableSet<MyCountDownTimer>) {
+    fun unbind(timerMap: MutableMap<Int, MyCountDownTimer>) {
+        Log.d("Tick", "unbind: $timer")
         timer.stop()
-        timerSet.remove(timer)
-    }
-
-    private fun setListeners(pet: Pet) {
-        timer.onTickListener = {
-            Log.d("Timer", "onTickListener: $it животного ${pet.petName}")
-            tvForTimer.text = getFormattedTime(it)
-        }
+        timerMap.values.remove(timer)
+        Log.d("Tick", "unbind: map size ${timerMap.size}")
     }
 
 
-
+    private fun setListeners() {
+            timer.onTickListener = {
+                Log.d("Tick", "setListeners: $it")
+                tvForTimer.text = getFormattedTime(it)
+            }
+    }
 
 }
 

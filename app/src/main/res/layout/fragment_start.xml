@@ -3,34 +3,40 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
-    <variable
-        name="viewModel"
-        type="ru.kesva.feedthepet.ui.viewmodel.PetViewModel" />
+
+        <variable
+            name="viewModel"
+            type="ru.kesva.feedthepet.ui.viewmodel.PetViewModel" />
     </data>
 
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-
-    tools:context=".ui.startfragment.StartFragment">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        tools:context=".ui.startfragment.StartFragment">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_button"
-        app:maxImageSize="30dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:theme="@style/AccentActionButton"
-        android:src="@drawable/add_for_fab"
-        android:onClick="@{() -> viewModel.createPet()}"
-        android:layout_margin="16dp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingBottom="88dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-</FrameLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_gravity="end|bottom"
+            android:onClick="@{() -> viewModel.createPet()}"
+            android:src="@drawable/add_for_fab"
+            android:theme="@style/AccentActionButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:maxImageSize="30dp" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
