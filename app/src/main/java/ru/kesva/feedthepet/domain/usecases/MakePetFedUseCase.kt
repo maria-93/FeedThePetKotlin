@@ -11,10 +11,11 @@ class MakePetFedUseCase @Inject constructor(
     private val alarmRepository: AlarmRepository
 ) {
     suspend operator fun invoke(pet: Pet) {
-        Log.d("Timer", "petFedButtonClicked: ")
+        Log.d("Test!", "petFedButtonClicked: ")
         val timeInFuture = System.currentTimeMillis() + pet.timeInterval
         pet.timeInFuture = timeInFuture
         repository.update(pet)
+        Log.d("Test!", "invoke after update: pet ${pet.petName} futureTime ${pet.timeInterval}")
         alarmRepository.startAlarm(pet, pet.timeInFuture)
     }
 }

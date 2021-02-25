@@ -15,11 +15,7 @@ import ru.kesva.feedthepet.data.model.PetDataAction
 import ru.kesva.feedthepet.domain.model.Pet
 import ru.kesva.feedthepet.domain.repository.AlarmRepository
 import ru.kesva.feedthepet.domain.repository.Repository
-import ru.kesva.feedthepet.domain.usecases.AddNewPetUseCase
-import ru.kesva.feedthepet.domain.usecases.DeletePetUseCase
-import ru.kesva.feedthepet.domain.usecases.MakePetFedUseCase
-import ru.kesva.feedthepet.domain.usecases.UpdatePetUseCase
-import ru.kesva.feedthepet.getFormattedTime
+import ru.kesva.feedthepet.domain.usecases.*
 import ru.kesva.feedthepet.getRemainTime
 import ru.kesva.feedthepet.ui.addnewpetfragment.PetCreationClickHandler
 import ru.kesva.feedthepet.ui.startfragment.PetAdapter
@@ -30,6 +26,7 @@ class PetViewModel @Inject constructor(
     private val updatePetUseCase: UpdatePetUseCase,
     private val deletePetUseCase: DeletePetUseCase,
     private val makePetFedUseCase: MakePetFedUseCase,
+    private val cancelAlarmUseCase: CancelAlarmUseCase,
     private val repository: Repository,
     private val alarmRepository: AlarmRepository
 ) : ViewModel(), PetAdapter.AdapterClickHandler, PetCreationClickHandler {
@@ -53,6 +50,9 @@ class PetViewModel @Inject constructor(
 
     private val _editButtonClicked: MutableLiveData<Event<Unit>> = MutableLiveData()
     val editButtonClicked: LiveData<Event<Unit>> = _editButtonClicked
+
+    private val _onOkButtonClicked: MutableLiveData<Event<Pet>> = MutableLiveData()
+    val onOkButtonClicked: LiveData<Event<Pet>> = _onOkButtonClicked
 
     val allPetLiveData: LiveData<List<Pet>>
         get() = repository.getAllPetData()
@@ -79,14 +79,18 @@ class PetViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             makePetFedUseCase(pet)
+
             myCountDownTimer.start(getRemainTime(pet.timeInFuture))
+
             _petFedButtonClicked.value = Event(Unit)
-            Log.d("Test!", "petFedButtonClicked: thread ${Thread.currentThread().name}")
         }
     }
 
     override fun cancelAlarmButtonClicked(pet: Pet) {
-        alarmRepository.cancelAlarm(pet)
+        viewModelScope.launch {
+            cancelAlarmUseCase.cancelAlarmFor(pet)
+        }
+
         _cancelAlarmButtonClicked.value = Event(pet)
     }
 
@@ -99,7 +103,7 @@ class PetViewModel @Inject constructor(
     }
 
     override fun deleteButtonClicked(pet: Pet) {
-     _alertDialogInitiated.value = Event(pet)
+        _alertDialogInitiated.value = Event(pet)
     }
 
     fun positiveButtonClick(pet: Pet) = { _: DialogInterface, _: Int ->
@@ -114,20 +118,16 @@ class PetViewModel @Inject constructor(
             )
     }
 
-    override fun onOkButtonClicked(pet: Pet) {
+    override fun onOkButtonClicked() {
         viewModelScope.launch {
             when (buffer.petDataAction) {
                 PetDataAction.CREATE_PET -> addNewPetUseCase.addNewPet(buffer.pet)
                 PetDataAction.UPDATE_PET -> {
-                    Log.d("Test!", "onOkButtonClicked: update branch")
-                    Log.d(
-                        "Test!", "onOkButtonClicked: ${
-                            getFormattedTime(pet.timeInterval)
-                        }"
-                    )
-                    alarmRepository.cancelAlarm(pet)
-                    Log.d("Test!", "onOkButtonClicked: cancelAlarm!")
+                    cancelAlarmUseCase.cancelAlarmFor(buffer.pet)
+                    Log.d("Test!", "onOkButtonClicked: cancel alarm pet ${buffer.pet.petName} futureTime ${buffer.pet.timeInFuture}")
                     updatePetUseCase.updatePet(buffer.pet)
+                    Log.d("Test!", "onOkButtonClicked: update pet ${buffer.pet.petName} futureTime ${buffer.pet.timeInFuture}")
+                    _onOkButtonClicked.value = Event(buffer.pet)
                 }
             }
         }

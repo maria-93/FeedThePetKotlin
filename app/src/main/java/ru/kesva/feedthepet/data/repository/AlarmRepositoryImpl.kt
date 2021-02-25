@@ -57,11 +57,10 @@ class AlarmRepositoryImpl @Inject constructor(@ApplicationContext private val co
 
 
 
-    override fun cancelAlarm(pet: Pet) {
+    override fun cancelAlarmFor(pet: Pet) {
         val alarmManager =
             context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val pendingIntent = getPendingIntentForCancel(context, pet)
-        Log.d("Test!", "alarmRepository: cancel alarm for pet ${pet.petName}")
         alarmManager.cancel(pendingIntent)
     }
 

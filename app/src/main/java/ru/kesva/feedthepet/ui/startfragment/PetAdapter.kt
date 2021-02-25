@@ -66,6 +66,7 @@ class PetAdapter @Inject constructor(
 
     }
 
+
     interface AdapterClickHandler {
         fun petFedButtonClicked(
             pet: Pet,
@@ -91,6 +92,7 @@ class PetAdapter @Inject constructor(
     fun stopTimerForPet(pet: Pet) {
         val timer = timerMap[pet.id]
         timer?.stop()
+        timerMap.remove(pet.id)
         Log.d("Tick", "stopTimerForPet: name ${pet.petName} id pet ${pet.id}")
     }
 }
@@ -135,12 +137,11 @@ class PetDataViewHolder @Inject constructor(
 
 
     private fun setListeners() {
-            timer.onTickListener = {
-                Log.d("Tick", "setListeners: $it")
-                tvForTimer.text = getFormattedTime(it)
-            }
+        timer.onTickListener = {
+            Log.d("Tick", "setListeners: $it")
+            tvForTimer.text = getFormattedTime(it)
+        }
     }
-
 }
 
 

@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -20,6 +21,7 @@ import ru.kesva.feedthepet.di.modules.ClickHandlersProvideModule
 import ru.kesva.feedthepet.di.subcomponents.StartComponent
 import ru.kesva.feedthepet.domain.model.Pet
 import ru.kesva.feedthepet.extensions.getViewModel
+import ru.kesva.feedthepet.getFormattedTime
 import ru.kesva.feedthepet.ui.MainActivity
 import ru.kesva.feedthepet.ui.dialogfragment.DeletePetDialogFragment
 import ru.kesva.feedthepet.ui.viewmodel.PetViewModel
@@ -91,8 +93,6 @@ class StartFragment : Fragment() {
                         Log.d("Tick", "subscribeToEvents: timer stopped")
                         it.stop()
                     }
-                    adapter.timerMap.clear()
-                    Log.d("Tick", "timer map cleared")
                 }
             })
 
@@ -121,6 +121,12 @@ class StartFragment : Fragment() {
                     Log.d("Test!", "subscribeToEvents: cancel Alarm Toast")
                     adapter.stopTimerForPet(pet)
                     cancelAlarmShowToast()
+                }
+            })
+
+            onOkButtonClicked.observe(viewLifecycleOwner, Observer {
+                it.getContentIfNotHandled()?.let { pet ->
+                    adapter.stopTimerForPet(pet)
                 }
             })
 
@@ -154,6 +160,13 @@ class StartFragment : Fragment() {
                 )
         component.provideDependenciesFor(this)
         viewModel = getViewModel(factory, requireActivity())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adapter.notifyDataSetChanged()
+        Log.d("Tick", "onResume: ")
+
     }
 
     override fun onPause() {

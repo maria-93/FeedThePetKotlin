@@ -11,7 +11,7 @@ class DeletePetUseCase @Inject constructor(
 ) {
 
     suspend fun deletePet(pet: Pet) {
-        alarmRepository.cancelAlarm(pet)
+        alarmRepository.cancelAlarmFor(pet)
         repository.delete(pet)
     }
 }

@@ -8,7 +8,7 @@ interface AlarmRepository {
         triggerTime: Long
     )
 
-    fun cancelAlarm(pet: Pet)
+    fun cancelAlarmFor(pet: Pet)
 
     fun sendNotification(pet: Pet)
 }

@@ -94,7 +94,7 @@ class AddNewPetFragment : Fragment() {
                     val time = getTotalTime(daysInMs, hoursInMs, minutesInMs)
                     //val fakeTime = writeFakeTime()
                     buffer.pet.timeInterval = time
-                    clickHandler.onOkButtonClicked(buffer.pet)
+                    clickHandler.onOkButtonClicked()
                     val navController =
                         NavHostFragment.findNavController(this)
                     navController.popBackStack()
@@ -198,6 +198,6 @@ class AddNewPetFragment : Fragment() {
 }
 
 interface PetCreationClickHandler {
-    fun onOkButtonClicked(pet: Pet)
+    fun onOkButtonClicked()
     fun getBuffer(): Buffer
 }
