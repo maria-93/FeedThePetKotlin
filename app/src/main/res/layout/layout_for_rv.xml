@@ -36,7 +36,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="8dp">
 
             <TextView
                 android:id="@+id/tv_pet_name"
@@ -44,13 +44,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@{pet.petName}"
+                android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="24sp"
-                android:textAlignment="center"
+                app:layout_constraintBottom_toTopOf="@id/barrier_pet_name"
                 app:layout_constraintEnd_toEndOf="@+id/petImageRv"
                 app:layout_constraintStart_toStartOf="@+id/petImageRv"
                 app:layout_constraintTop_toBottomOf="@+id/petImageRv"
-                app:layout_constraintBottom_toTopOf="@id/barrier_pet_name"
                 tools:text="Зябличка" />
 
             <TextView
@@ -61,7 +61,9 @@
                 android:text="@string/time_before_feeding"
                 android:textColor="@color/black"
                 android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/tvremaintime"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/petImageRv"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -70,15 +72,14 @@
                 android:id="@+id/linearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="38dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/oval_shape_background_linearlayout"
                 android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="@+id/time_before_feeding"
-                app:layout_constraintStart_toStartOf="@+id/time_before_feeding"
-                app:layout_constraintTop_toBottomOf="@+id/tvremaintime"
-                app:layout_constraintBottom_toTopOf="@id/barrier_pet_name">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/next_feeding"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/next_feeding"
+                app:layout_constraintTop_toBottomOf="@+id/next_feeding">
 
 
                 <ImageView
@@ -130,52 +131,53 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="28sp"
+                app:layout_constraintBottom_toTopOf="@+id/next_feeding"
                 app:layout_constraintEnd_toEndOf="@+id/time_before_feeding"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/time_before_feeding"
                 app:layout_constraintTop_toBottomOf="@+id/time_before_feeding"
                 tools:text="@string/fake_time" />
 
             <TextView
-                android:id="@+id/tv_next_feeding"
+                android:id="@+id/next_feeding"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/feed_me_at"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                app:layout_constraintEnd_toEndOf="@+id/tvremaintime"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/tvremaintime"
                 app:layout_constraintTop_toBottomOf="@+id/tvremaintime"
                 app:textForNextFeeding="@{pet}"
-                tools:text="16 авг. 10:32" />
+                tools:text="Покорми меня: 16 авг., 10:32" />
 
-            <TextView
+
+            <!--<TextView
                 android:id="@+id/feed_me_at"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:text="@string/feed_me_at"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintEnd_toStartOf="@+id/tv_next_feeding"
-                app:layout_constraintStart_toEndOf="@+id/petImageRv"
-                app:layout_constraintTop_toBottomOf="@+id/tvremaintime" />
-
+                app:layout_constraintEnd_toStartOf="@+id/tvremaintime"
+                app:layout_constraintStart_toStartOf="@+id/linearLayout"
+                app:layout_constraintTop_toBottomOf="@+id/tvremaintime" />-->
 
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/barrier_pet_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:barrierDirection="bottom"
-                app:constraint_referenced_ids="tv_pet_name"
-                 />
+                app:constraint_referenced_ids="tv_pet_name" />
 
             <ImageView
                 android:id="@+id/iv_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="10dp"
                 android:onClick="@{() -> adapterClickHandler.deleteButtonClicked(pet)}"
                 android:src="@drawable/delete_pet"
                 app:layout_constraintEnd_toEndOf="parent"

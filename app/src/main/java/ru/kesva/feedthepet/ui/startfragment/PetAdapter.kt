@@ -2,6 +2,7 @@ package ru.kesva.feedthepet.ui.startfragment
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
@@ -43,7 +44,6 @@ class PetAdapter @Inject constructor(
         petList[position].let {
             holder.bind(it, adapterClickHandler, timerMap)
         }
-
     }
 
     override fun onViewRecycled(holder: PetDataViewHolder) {

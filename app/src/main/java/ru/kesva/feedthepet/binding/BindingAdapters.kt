@@ -2,10 +2,13 @@ package ru.kesva.feedthepet.binding
 
 import android.text.format.DateFormat
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.os.LocaleListCompat
 import androidx.databinding.BindingAdapter
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import ru.kesva.feedthepet.MyCountDownTimer
@@ -24,14 +27,21 @@ fun loadImage(imageView: ImageView, petImageUri: String) {
 }
 
 @BindingAdapter("textForNextFeeding")
-fun textForNextFeeding(textView: TextView, pet: Pet) {
+fun TextView.textForNextFeeding(pet: Pet) {
     val timeInFuture = pet.timeInFuture
     val currentLocale = LocaleListCompat.getDefault()[0]
     val format = DateFormat.getBestDateTimePattern(
         currentLocale, "HH:mm MMM dd"
     )
-    val df = SimpleDateFormat(format, currentLocale).format(timeInFuture)
-    textView.text = df
+
+    if (timeInFuture > 0) {
+        visibility = View.VISIBLE
+        val formattedDate = SimpleDateFormat(format, currentLocale).format(timeInFuture)
+        text = context.getString(R.string.feed_me_at, formattedDate)
+    } else {
+        text = context.getString(R.string.timer_stopped)
+    }
+
 }
 
 @BindingAdapter("bindTimer", "bindTextView", "bindPet")

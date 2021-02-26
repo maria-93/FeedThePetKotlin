@@ -20,7 +20,8 @@
     <string name="minutes">Минуты</string>
     <string name="choose_pet_photo">Выберите фото питомца</string>
     <string name="ok_button">OK</string>
-    <string name="feed_me_at">Покорми меня:</string>
+    <string name="feed_me_at">Покорми меня: %1$s</string>
+    <string name="timer_stopped">Таймер остановлен</string>
 
 
 </resources>
