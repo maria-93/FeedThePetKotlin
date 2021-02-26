@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ru.kesva.feedthepet.FeedThePetApplication
@@ -60,12 +62,21 @@ class StartFragment : Fragment() {
         fab = binding.fabButton
         binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                //скроллим вверх
                 if (dy < 0 && fab.visibility == View.VISIBLE) {
                     fab.hide()
-                } else if (dy > 0 && fab.visibility != View.VISIBLE) {
+                }
+                //если в recyclerview так мало элементов, что не выполняется скроллинг,
+                //делаем кнопку видимой
+                else if (fab.visibility != View.VISIBLE) {
+                    fab.show()
+                }
+                //скроллим вниз
+                else if (dy > 0 && fab.visibility != View.VISIBLE) {
                     fab.show()
                 }
             }
+
         })
         binding.viewModel = viewModel
         return binding.root
