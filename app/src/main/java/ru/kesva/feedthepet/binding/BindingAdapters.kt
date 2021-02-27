@@ -4,6 +4,7 @@ import android.text.format.DateFormat
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.NumberPicker
 import android.widget.TextView
 import androidx.core.os.LocaleListCompat
 import androidx.databinding.BindingAdapter
@@ -11,8 +12,7 @@ import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import ru.kesva.feedthepet.MyCountDownTimer
-import ru.kesva.feedthepet.R
+import ru.kesva.feedthepet.*
 import ru.kesva.feedthepet.domain.model.Pet
 import java.text.SimpleDateFormat
 
@@ -50,6 +50,13 @@ fun bindDataForTimerLaunch(view: View, timer: MyCountDownTimer, textView: TextVi
     if (remainTime > 0) {
         timer.start(remainTime)
     }
+}
+
+@BindingAdapter("bindDaysPicker", "bindHoursPicker", "bindMinutesPicker", "bindPet")
+fun timeForNumberPickers(view: View, daysPicker: NumberPicker, hoursPicker: NumberPicker, minutesPicker: NumberPicker, pet: Pet) {
+    daysPicker.value = msToDays(pet.timeInterval)
+    hoursPicker.value = msToHours(pet.timeInterval)
+    minutesPicker.value = msToMinutes(pet.timeInterval)
 }
 
 

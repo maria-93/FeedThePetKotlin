@@ -150,9 +150,9 @@ class AddNewPetFragment : Fragment() {
         petName = binding.etChoosePetName
         petImage = binding.petImage
         okButton = binding.buttonOk
-        pickerForDays = binding.numberPickerDays
-        pickerForHours = binding.numberPickerHours
-        pickerForMinutes = binding.numberPickerMinutes
+        pickerForDays = binding.pickerDays
+        pickerForHours = binding.pickerHours
+        pickerForMinutes = binding.pickerMinutes
     }
 
     private fun showToastTimeMustBeAboveZero() {

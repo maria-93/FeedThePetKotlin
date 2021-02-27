@@ -83,7 +83,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_choose_time_for_feed">
 
             <NumberPicker
-                android:id="@+id/number_picker_hours"
+                android:id="@+id/pickerHours"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -92,18 +92,22 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <NumberPicker
-                android:id="@+id/number_picker_days"
+                android:id="@+id/pickerDays"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_weight="1"
+                app:bindDaysPicker="@{pickerDays}"
+                app:bindHoursPicker="@{pickerHours}"
+                app:bindMinutesPicker="@{pickerMinutes}"
+                app:bindPet="@{pet}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/number_picker_hours"
-                app:layout_constraintLeft_toRightOf="@id/number_picker_hours"
+                app:layout_constraintEnd_toStartOf="@+id/pickerHours"
+                app:layout_constraintLeft_toRightOf="@id/pickerHours"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <NumberPicker
-                android:id="@+id/number_picker_minutes"
+                android:id="@+id/pickerMinutes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -112,7 +116,7 @@
                 android:focusableInTouchMode="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/number_picker_hours" />
+                app:layout_constraintLeft_toRightOf="@id/pickerHours" />
 
             <TextView
                 android:id="@+id/tv_day"
@@ -120,9 +124,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="@string/days"
-                app:layout_constraintBottom_toTopOf="@+id/number_picker_days"
-                app:layout_constraintEnd_toEndOf="@+id/number_picker_days"
-                app:layout_constraintStart_toStartOf="@+id/number_picker_days" />
+                app:layout_constraintBottom_toTopOf="@+id/pickerDays"
+                app:layout_constraintEnd_toEndOf="@+id/pickerDays"
+                app:layout_constraintStart_toStartOf="@+id/pickerDays" />
 
             <TextView
                 android:id="@+id/tv_hour"
@@ -130,9 +134,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="@string/hours"
-                app:layout_constraintBottom_toTopOf="@+id/number_picker_hours"
-                app:layout_constraintEnd_toEndOf="@+id/number_picker_hours"
-                app:layout_constraintStart_toStartOf="@+id/number_picker_hours" />
+                app:layout_constraintBottom_toTopOf="@+id/pickerHours"
+                app:layout_constraintEnd_toEndOf="@+id/pickerHours"
+                app:layout_constraintStart_toStartOf="@+id/pickerHours" />
 
             <TextView
                 android:id="@+id/tv_minute"
@@ -140,9 +144,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="@string/minutes"
-                app:layout_constraintBottom_toTopOf="@+id/number_picker_minutes"
-                app:layout_constraintEnd_toEndOf="@+id/number_picker_minutes"
-                app:layout_constraintStart_toStartOf="@+id/number_picker_minutes" />
+                app:layout_constraintBottom_toTopOf="@+id/pickerMinutes"
+                app:layout_constraintEnd_toEndOf="@+id/pickerMinutes"
+                app:layout_constraintStart_toStartOf="@+id/pickerMinutes" />
 
             <TextView
                 android:id="@+id/time_picked"
