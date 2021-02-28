@@ -52,7 +52,7 @@ fun getFormattedTime(timeInterval: Long): String {
     val days = (timeInterval / (1000 * 60 * 60 * 24)).toInt()
 
     when {
-        timeInterval < 86400000 -> {
+        timeInterval in 3600000..86399999 -> {
             return String.format(
                 Locale.getDefault(),
                 "%02dч. %02dм.",
@@ -60,6 +60,7 @@ fun getFormattedTime(timeInterval: Long): String {
                 minutes
             )
         }
+
         timeInterval < 3600000 -> {
             return String.format(
                 Locale.getDefault(),
@@ -67,6 +68,7 @@ fun getFormattedTime(timeInterval: Long): String {
                 minutes
             )
         }
+
         else -> {
             return String.format(
                 Locale.getDefault(),

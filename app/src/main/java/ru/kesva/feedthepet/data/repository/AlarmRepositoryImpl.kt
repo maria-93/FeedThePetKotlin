@@ -116,14 +116,14 @@ class AlarmRepositoryImpl @Inject constructor(@ApplicationContext private val co
         val builder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
             .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
             .setSmallIcon(R.drawable.ic_action_name)
-            .setContentTitle("Покорми питомца ${pet.petName}!")
-            .setContentText("Настало время покормить питомца")
-            .setStyle(NotificationCompat.BigTextStyle().bigText("Настало время покормить питомца"))
+            .setContentTitle(context.getString(R.string.notification_title, pet.petName))
+            .setContentText(context.getString(R.string.notification_body))
+            .setStyle(NotificationCompat.BigTextStyle().bigText(context.getString(R.string.notification_body)))
             .setDefaults(Notification.DEFAULT_VIBRATE)
             .setContentIntent(openMainActivity(context))
             .addAction(
                 R.drawable.ic_action_name,
-                "Питомец накормлен",
+                context.getString(R.string.pet_fed),
                 actionIntent(context, pet)
             )
             .setAutoCancel(true)

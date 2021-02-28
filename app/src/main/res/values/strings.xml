@@ -4,17 +4,16 @@
     <string name="time_before_feeding">Осталось:</string>
     <string name="fake_time">01:32</string>
 
-    <string name="pet_name_hint">Введите имя питомца</string>
+    <string name="hint_pet_name">Введите имя питомца</string>
     <string name="button_pet_fed">Питомец накормлен</string>
     
     <string name="notification_body">Настало время покормить питомца</string>
-    <string name="notification_title">Покорми питомца!</string>
-
+    <string name="notification_title">Покорми питомца %1$s!</string>
 
     <string name="database_name">pet_database</string>
     <string name="button_cancel_alarm">Отмена будильника</string>
     <string name="toast_name_is_empty">Имя питомца не может быть пустым</string>
-    <string name="feeding_time_hint">Укажите периодичность кормления питомца</string>
+    <string name="hint_feeding_frequency">Укажите периодичность кормления питомца</string>
     <string name="days">Дни</string>
     <string name="hours">Часы</string>
     <string name="minutes">Минуты</string>
@@ -22,6 +21,9 @@
     <string name="ok_button">OK</string>
     <string name="feed_me_at">Покорми меня: %1$s</string>
     <string name="timer_stopped">Таймер остановлен</string>
+    <string name="toast_time_must_be_above_zero">Время должно быть больше 0</string>
+    <string name="toast_alarm_launched">Будильник запущен</string>
+    <string name="toast_alarm_stopped">Будильник остановлен</string>
 
 
 </resources>

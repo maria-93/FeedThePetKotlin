@@ -150,11 +150,11 @@ class StartFragment : Fragment() {
     }
 
     private fun startAlarmShowToast() {
-        Toast.makeText(context, "Будильник запущен", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, getString(R.string.toast_alarm_launched), Toast.LENGTH_SHORT).show()
     }
 
     private fun cancelAlarmShowToast() {
-        Toast.makeText(context, "Будильник остановлен", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, getString(R.string.toast_alarm_stopped), Toast.LENGTH_SHORT).show()
     }
 
     private fun showAlertDialog() {

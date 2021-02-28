@@ -82,7 +82,7 @@ class AddNewPetFragment : Fragment() {
                 val daysInPicker = pickerForDays.value
                 val hoursInPicker = pickerForHours.value
                 val minutesInPicker = pickerForMinutes.value
-                Log.d("Task", "onViewCreated: дни пикера $daysInPicker часы пикера $hoursInPicker минуты пикера $minutesInPicker")
+
                 val daysInMs = daysToMs(daysInPicker)
                 val hoursInMs = hoursToMs(hoursInPicker)
                 val minutesInMs = minutesToMs(minutesInPicker)
@@ -92,7 +92,7 @@ class AddNewPetFragment : Fragment() {
                 } else {
                     buffer.pet.petName = name
                     val time = getTotalTime(daysInMs, hoursInMs, minutesInMs)
-                    //val fakeTime = writeFakeTime()
+
                     buffer.pet.timeInterval = time
                     clickHandler.onOkButtonClicked()
                     val navController =
@@ -158,7 +158,7 @@ class AddNewPetFragment : Fragment() {
     private fun showToastTimeMustBeAboveZero() {
         Toast.makeText(
             requireContext(),
-            "Время должно быть больше 0",
+            getString(R.string.toast_time_must_be_above_zero),
             Toast.LENGTH_SHORT
         )
             .show()
@@ -189,12 +189,6 @@ class AddNewPetFragment : Fragment() {
     ): Long {
         return daysInMs + hoursInMs + minutesInMs
     }
-
-    private fun writeFakeTime(): Long {
-        //10 секунд
-        return 10000
-    }
-
 }
 
 interface PetCreationClickHandler {
