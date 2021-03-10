@@ -5,13 +5,13 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.NumberPicker
 import android.widget.TextView
-import androidx.core.os.LocaleListCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import ru.kesva.feedthepet.*
 import ru.kesva.feedthepet.domain.model.Pet
 import java.text.SimpleDateFormat
+import java.util.*
 
 @BindingAdapter("loadImage")
 fun loadImage(imageView: ImageView, petImageUri: String) {
@@ -26,14 +26,19 @@ fun loadImage(imageView: ImageView, petImageUri: String) {
 @BindingAdapter("textForNextFeeding")
 fun TextView.textForNextFeeding(pet: Pet) {
     val timeInFuture = pet.timeInFuture
-    val currentLocale = LocaleListCompat.getDefault()[0]
-    val format = DateFormat.getBestDateTimePattern(
-        currentLocale, "HH:mm MMM dd"
-    )
+    val locale = Locale.getDefault()
+    var dateFormat = ""
+    dateFormat = if (locale.language == "en" && locale.country == "US") {
+        DateFormat.getBestDateTimePattern(locale, "MMMM d h:mm a")
+    } else {
+        DateFormat.getBestDateTimePattern(
+            locale, "HH:mm MMM dd"
+        )
+    }
 
     if (timeInFuture > 0) {
         visibility = View.VISIBLE
-        val formattedDate = SimpleDateFormat(format, currentLocale).format(timeInFuture)
+        val formattedDate = SimpleDateFormat(dateFormat, locale).format(timeInFuture)
         text = context.getString(R.string.feed_me_at, formattedDate)
     } else {
         text = context.getString(R.string.timer_stopped)
