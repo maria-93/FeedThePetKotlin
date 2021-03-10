@@ -1,7 +1,6 @@
 package ru.kesva.feedthepet
 
 import android.os.CountDownTimer
-import android.util.Log
 
 class MyCountDownTimer {
     private var timer: CountDownTimer? = null

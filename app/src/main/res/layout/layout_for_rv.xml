@@ -153,19 +153,6 @@
                 app:textForNextFeeding="@{pet}"
                 tools:text="Покорми меня: 16 авг., 10:32" />
 
-
-            <!--<TextView
-                android:id="@+id/feed_me_at"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/feed_me_at"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@+id/tvremaintime"
-                app:layout_constraintStart_toStartOf="@+id/linearLayout"
-                app:layout_constraintTop_toBottomOf="@+id/tvremaintime" />-->
-
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/barrier_pet_name"
                 android:layout_width="0dp"

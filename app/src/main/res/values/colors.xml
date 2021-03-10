@@ -12,7 +12,6 @@
     <color name="grey">#AEAEAE</color>
     <color name="lightGrey">#EFEFEF</color>
 
-    <color name="background">#E6E6E6</color>
     <color name="backgroundRecyclerView">#FFF5E5</color>
     <color name="backgroundRecyclerViewDarker">#FDF0DA</color>
 

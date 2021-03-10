@@ -104,13 +104,14 @@ class StartFragment : Fragment() {
                         Log.d("Tick", "subscribeToEvents: timer stopped")
                         it.stop()
                     }
+                    timers.clear()
                 }
             })
 
             deletePet.observe(viewLifecycleOwner, Observer { pet ->
                 pet.getContentIfNotHandled()?.let {
                     adapter.petList.remove(it)
-                    adapter.notifyDataSetChanged()
+                    adapter.notifyItemRemoved(adapter.petList.indexOf(it))
                 }
             })
 

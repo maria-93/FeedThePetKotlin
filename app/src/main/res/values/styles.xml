@@ -10,11 +10,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="PrimaryActionButton" parent="Theme.AppCompat.Light">
-        <item name="colorSecondary">@color/colorPrimary</item>
-        <item name="colorOnSecondary">@color/colorAccentDark</item>
-    </style>
-
     <style name="AccentActionButton" parent="Theme.AppCompat.Light">
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="colorOnSecondary">#FFFFFF</item>
@@ -49,9 +44,5 @@
 
     <style name="PositiveButtonBarStyle" parent="BaseButtonBarStyle">
     </style>
-
-
-
-
 
 </resources>

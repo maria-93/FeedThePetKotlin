@@ -1,7 +1,6 @@
 package ru.kesva.feedthepet.ui.viewmodel
 
 import android.content.DialogInterface
-import android.util.Log
 import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,7 +12,6 @@ import ru.kesva.feedthepet.data.model.Buffer
 import ru.kesva.feedthepet.data.model.Event
 import ru.kesva.feedthepet.data.model.PetDataAction
 import ru.kesva.feedthepet.domain.model.Pet
-import ru.kesva.feedthepet.domain.repository.AlarmRepository
 import ru.kesva.feedthepet.domain.repository.Repository
 import ru.kesva.feedthepet.domain.usecases.*
 import ru.kesva.feedthepet.getRemainTime
@@ -27,8 +25,7 @@ class PetViewModel @Inject constructor(
     private val deletePetUseCase: DeletePetUseCase,
     private val makePetFedUseCase: MakePetFedUseCase,
     private val cancelAlarmUseCase: CancelAlarmUseCase,
-    private val repository: Repository,
-    private val alarmRepository: AlarmRepository
+    private val repository: Repository
 ) : ViewModel(), PetAdapter.AdapterClickHandler, PetCreationClickHandler {
 
     private lateinit var buffer: Buffer
@@ -124,9 +121,9 @@ class PetViewModel @Inject constructor(
                 PetDataAction.CREATE_PET -> addNewPetUseCase.addNewPet(buffer.pet)
                 PetDataAction.UPDATE_PET -> {
                     cancelAlarmUseCase.cancelAlarmFor(buffer.pet)
-                    Log.d("Test!", "onOkButtonClicked: cancel alarm pet ${buffer.pet.petName} futureTime ${buffer.pet.timeInFuture}")
+
                     updatePetUseCase.updatePet(buffer.pet)
-                    Log.d("Test!", "onOkButtonClicked: update pet ${buffer.pet.petName} futureTime ${buffer.pet.timeInFuture}")
+
                     _onOkButtonClicked.value = Event(buffer.pet)
                 }
             }

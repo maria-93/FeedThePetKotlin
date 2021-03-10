@@ -7,8 +7,6 @@ import ru.kesva.feedthepet.domain.repository.Repository
 
 class FakeRepository : Repository {
 
-
-
     val petDataSet = mutableSetOf<Pet>()
     val liveData = MutableLiveData<List<Pet>>()
 
@@ -42,7 +40,7 @@ class FakeRepository : Repository {
         return liveData
     }
 
-    protected fun notifyObservers() {
+    private fun notifyObservers() {
         liveData.value = getPetDataCopySortedById(petDataSet)
 
 

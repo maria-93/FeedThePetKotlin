@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Feed the pet</string>
+    <string name="pet_fed">Pet is fed</string>
+    <string name="time_before_feeding">Time left:</string>
+    <string name="fake_time">01:32</string>
+
+    <string name="hint_pet_name">Enter the pet name</string>
+
+    <string name="notification_body">It is time to feed the pet</string>
+    <string name="notification_title">Feed the pet %1$s!</string>
+
+    <string name="toast_name_is_empty">Pet\'s name can not be empty</string>
+    <string name="hint_feeding_frequency">Indicate the frequency of feeding the pet</string>
+    <string name="days">Days</string>
+    <string name="hours">Hours</string>
+    <string name="minutes">Minutes</string>
+    <string name="choose_pet_photo">Choose a pet photo</string>
+    <string name="ok_button">OK</string>
+    <string name="feed_me_at">Feed me at: %1$s</string>
+    <string name="timer_stopped">Timer is stopped</string>
+    <string name="toast_time_must_be_above_zero">The time must be above 0</string>
+    <string name="toast_alarm_launched">Alarm launched</string>
+    <string name="toast_alarm_stopped">Alarm stopped</string>
+</resources>

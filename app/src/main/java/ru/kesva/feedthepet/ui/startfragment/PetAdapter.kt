@@ -2,7 +2,6 @@ package ru.kesva.feedthepet.ui.startfragment
 
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
@@ -44,6 +43,8 @@ class PetAdapter @Inject constructor(
         petList[position].let {
             holder.bind(it, adapterClickHandler, timerMap)
         }
+        Log.d("Tick", "onBindViewHolder: ")
+
     }
 
     override fun onViewRecycled(holder: PetDataViewHolder) {
@@ -120,9 +121,7 @@ class PetDataViewHolder @Inject constructor(
             Log.d("Tick", "bind: timer $timer")
             timerMap[pet.id] = timer
         }
-        tvForTimer.text = getFormattedTime(pet.timeInterval)
-
-
+        
         setListeners()
 
         binding.executePendingBindings()
@@ -140,6 +139,8 @@ class PetDataViewHolder @Inject constructor(
         timer.onTickListener = {
             Log.d("Tick", "setListeners: $it")
             tvForTimer.text = getFormattedTime(it)
+
+
         }
     }
 }

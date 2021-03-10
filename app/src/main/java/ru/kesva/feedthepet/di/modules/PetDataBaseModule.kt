@@ -15,7 +15,6 @@ class PetDatabaseModule {
     @Singleton
     @Provides
     fun providePetDatabase(@ApplicationContext context: Context): PetDatabase =
-        //Room.inMemoryDatabaseBuilder(context, PetDatabase::class.java).build()
         Room.databaseBuilder(context, PetDatabase::class.java, databaseName).fallbackToDestructiveMigration().build()
 
 }

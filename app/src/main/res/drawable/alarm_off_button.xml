@@ -2,12 +2,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <item
-        android:id="@+id/circle_2"
-        android:drawable="@android:color/transparent"/>
+    <item android:drawable="@android:color/transparent"/>
 
     <item
-        android:id="@+id/alarm_off"
         android:drawable="@drawable/alarm_off"
         android:gravity="center"/>
 </layer-list>
