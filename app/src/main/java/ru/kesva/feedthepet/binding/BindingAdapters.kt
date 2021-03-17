@@ -1,16 +1,20 @@
 package ru.kesva.feedthepet.binding
 
 import android.text.format.DateFormat
+import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
 import android.widget.NumberPicker
 import android.widget.TextView
+import androidx.core.widget.TextViewCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import ru.kesva.feedthepet.*
 import ru.kesva.feedthepet.domain.model.Pet
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 
 @BindingAdapter("loadImage")
@@ -25,10 +29,12 @@ fun loadImage(imageView: ImageView, petImageUri: String) {
 
 @BindingAdapter("textForNextFeeding")
 fun TextView.textForNextFeeding(pet: Pet) {
+    TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
+        this, 10, 17, 1, TypedValue.COMPLEX_UNIT_DIP
+    )
     val timeInFuture = pet.timeInFuture
     val locale = Locale.getDefault()
-    var dateFormat = ""
-    dateFormat = if (locale.language == "en" && locale.country == "US") {
+    val dateFormat = if (locale.language == "en" && locale.country == "US") {
         DateFormat.getBestDateTimePattern(locale, "MMMM d h:mm a")
     } else {
         DateFormat.getBestDateTimePattern(
@@ -40,6 +46,7 @@ fun TextView.textForNextFeeding(pet: Pet) {
         visibility = View.VISIBLE
         val formattedDate = SimpleDateFormat(dateFormat, locale).format(timeInFuture)
         text = context.getString(R.string.feed_me_at, formattedDate)
+
     } else {
         text = context.getString(R.string.timer_stopped)
     }
@@ -48,9 +55,6 @@ fun TextView.textForNextFeeding(pet: Pet) {
 
 @BindingAdapter("bindTimer", "bindTextView", "bindPet")
 fun bindDataForTimerLaunch(view: View, timer: MyCountDownTimer, textView: TextView, pet: Pet) {
-    view.post {
-        textView.text = getFormattedTime(pet.timeInterval)
-    }
     val remainTime = pet.timeInFuture - System.currentTimeMillis()
     if (remainTime > 0) {
         timer.start(remainTime)

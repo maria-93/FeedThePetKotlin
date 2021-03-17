@@ -40,7 +40,7 @@ class PetViewModel @Inject constructor(
     val createNewPet: LiveData<Event<Unit>> = _createNewPet
 
     private val _deletePet: MutableLiveData<Event<Pet>> = MutableLiveData()
-    val deletePet: LiveData<Event<Pet>> = _deletePet
+
 
     private val _petFedButtonClicked: MutableLiveData<Event<Unit>> = MutableLiveData()
     val petFedButtonClicked: LiveData<Event<Unit>> = _petFedButtonClicked
@@ -103,16 +103,10 @@ class PetViewModel @Inject constructor(
         _alertDialogInitiated.value = Event(pet)
     }
 
-    fun positiveButtonClick(pet: Pet) = { _: DialogInterface, _: Int ->
+    fun positiveButtonClick(pet: Pet) {
         viewModelScope.launch {
             deletePetUseCase.deletePet(pet)
         }
-        _deletePet.value =
-            Event(
-                Pet(
-                    pet.id, pet.petName, pet.timeInterval, pet.petImageURI, pet.timeInFuture
-                )
-            )
     }
 
     override fun onOkButtonClicked() {

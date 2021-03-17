@@ -26,9 +26,9 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="10dp"
         android:background="@color/backgroundRecyclerView"
         android:elevation="10dp"
         app:cardCornerRadius="16dp">
@@ -60,10 +60,9 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/time_before_feeding"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 app:layout_constraintBottom_toTopOf="@+id/tvremaintime"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/petImageRv"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -72,14 +71,11 @@
                 android:id="@+id/linearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:background="@drawable/oval_shape_background_linearlayout"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/next_feeding"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/next_feeding"
-                app:layout_constraintTop_toBottomOf="@+id/next_feeding">
+                app:layout_constraintEnd_toEndOf="@+id/time_before_feeding"
+                app:layout_constraintStart_toStartOf="@+id/time_before_feeding">
 
 
                 <ImageView
@@ -131,27 +127,27 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="28sp"
-                app:layout_constraintBottom_toTopOf="@+id/next_feeding"
                 app:layout_constraintEnd_toEndOf="@+id/time_before_feeding"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/time_before_feeding"
                 app:layout_constraintTop_toBottomOf="@+id/time_before_feeding"
                 tools:text="@string/fake_time" />
 
             <TextView
                 android:id="@+id/next_feeding"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-                app:layout_constraintEnd_toEndOf="@+id/tvremaintime"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/tvremaintime"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/petImageRv"
                 app:layout_constraintTop_toBottomOf="@+id/tvremaintime"
                 app:textForNextFeeding="@{pet}"
-                tools:text="Покорми меня: 16 авг., 10:32" />
+                tools:text="Покорми меня: 16 августа, 10:32" />
 
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/barrier_pet_name"

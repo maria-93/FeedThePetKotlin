@@ -2,6 +2,7 @@ package ru.kesva.feedthepet.ui.dialogfragment
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDialogFragment
 import ru.kesva.feedthepet.R
@@ -23,7 +24,9 @@ class DeletePetDialogFragment : AppCompatDialogFragment() {
         builder
             .setTitle("Внимание!")
             .setMessage("Удалить питомца?")
-            .setPositiveButton("Да", viewModel.positiveButtonClick(pet!!))
+            .setPositiveButton("Да") { _: DialogInterface, _: Int ->
+                viewModel.positiveButtonClick(pet!!)
+            }
             .setNegativeButton("Нет", null)
 
         return builder.create()

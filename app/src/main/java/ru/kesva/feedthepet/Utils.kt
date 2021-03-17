@@ -50,33 +50,61 @@ fun getFormattedTime(timeInterval: Long): String {
     val minutes = ((timeInterval / (1000 * 60)) % 60).toInt()
     val hours = ((timeInterval / (1000 * 60 * 60)) % 24).toInt()
     val days = (timeInterval / (1000 * 60 * 60 * 24)).toInt()
+    val locale = Locale.getDefault()
 
     when {
         timeInterval in 3600000..86399999 -> {
-            return String.format(
-                Locale.getDefault(),
-                "%02dч. %02dм.",
-                hours,
-                minutes
-            )
+            return if (locale.language == "en" && locale.country == "US") {
+                String.format(
+                    locale,
+                    "%02dh. %02dm.",
+                    hours,
+                    minutes
+                )
+            } else {
+                String.format(
+                    locale,
+                    "%02dч. %02dм.",
+                    hours,
+                    minutes
+                )
+            }
         }
 
         timeInterval < 3600000 -> {
-            return String.format(
-                Locale.getDefault(),
-                "%02dм.",
-                minutes
-            )
+            return if (locale.language == "en" && locale.country == "US") {
+                return String.format(
+                    locale,
+                    "%02dm.",
+                    minutes
+                )
+            } else {
+                String.format(
+                    locale,
+                    "%02dм.",
+                    minutes
+                )
+            }
         }
 
         else -> {
-            return String.format(
-                Locale.getDefault(),
-                "%02dд. %02dч. %02dм.",
-                days,
-                hours,
-                minutes
-            )
+            return if (locale.language == "en" && locale.country == "US") {
+                String.format(
+                    locale,
+                    "%02dd. %02dh. %02dm.",
+                    days,
+                    hours,
+                    minutes
+                )
+            } else {
+                String.format(
+                    locale,
+                    "%02dд. %02dч. %02dм.",
+                    days,
+                    hours,
+                    minutes
+                )
+            }
         }
     }
 }

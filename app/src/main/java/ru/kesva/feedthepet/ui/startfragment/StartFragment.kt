@@ -5,15 +5,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
-import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ru.kesva.feedthepet.FeedThePetApplication
 import ru.kesva.feedthepet.R
@@ -21,13 +19,12 @@ import ru.kesva.feedthepet.databinding.FragmentStartBinding
 import ru.kesva.feedthepet.di.ViewModelFactory
 import ru.kesva.feedthepet.di.modules.ClickHandlersProvideModule
 import ru.kesva.feedthepet.di.subcomponents.StartComponent
-import ru.kesva.feedthepet.domain.model.Pet
 import ru.kesva.feedthepet.extensions.getViewModel
-import ru.kesva.feedthepet.getFormattedTime
 import ru.kesva.feedthepet.ui.MainActivity
 import ru.kesva.feedthepet.ui.dialogfragment.DeletePetDialogFragment
 import ru.kesva.feedthepet.ui.viewmodel.PetViewModel
 import javax.inject.Inject
+
 
 /**
  *
@@ -92,7 +89,7 @@ class StartFragment : Fragment() {
     private fun subscribeToEvents() {
         with(viewModel) {
             allPetLiveData.observe(viewLifecycleOwner, Observer {
-                adapter.petList = it as MutableList<Pet>
+                adapter.submitList(it)
 
             })
 
@@ -105,13 +102,6 @@ class StartFragment : Fragment() {
                         it.stop()
                     }
                     timers.clear()
-                }
-            })
-
-            deletePet.observe(viewLifecycleOwner, Observer { pet ->
-                pet.getContentIfNotHandled()?.let {
-                    adapter.petList.remove(it)
-                    adapter.notifyItemRemoved(adapter.petList.indexOf(it))
                 }
             })
 

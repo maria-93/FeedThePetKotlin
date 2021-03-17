@@ -7,11 +7,12 @@ import javax.inject.Inject
 class CancelAlarmUseCase @Inject constructor(private val alarmRepository: AlarmRepository,
 private val updatePetUseCase: UpdatePetUseCase) {
     suspend fun cancelAlarmFor(pet: Pet) {
-        alarmRepository.cancelAlarmFor(pet)
+        val clonedPet = pet.getCopy()
+        alarmRepository.cancelAlarmFor(clonedPet)
         //чтобы время на вьюшке таймера после остановки будильника перестало обновляться,
         // у питомца нужно обнулить timeInFuture,
         //с помощью которого рассчитывается оставшееся до кормления время
-        pet.timeInFuture = 0
-        updatePetUseCase.updatePet(pet)
+        clonedPet.timeInFuture = 0
+        updatePetUseCase.updatePet(clonedPet)
     }
 }
