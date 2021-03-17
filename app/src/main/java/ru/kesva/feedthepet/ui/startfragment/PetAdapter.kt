@@ -5,8 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.kesva.feedthepet.MyCountDownTimer
+import ru.kesva.feedthepet.PetDiffUtilCallback
 import ru.kesva.feedthepet.R
 import ru.kesva.feedthepet.databinding.LayoutForRvBinding
 import ru.kesva.feedthepet.domain.model.Pet
@@ -16,14 +19,8 @@ import javax.inject.Inject
 
 class PetAdapter @Inject constructor(
     private val adapterClickHandler: AdapterClickHandler
-) : RecyclerView.Adapter<PetDataViewHolder>() {
+) : ListAdapter<Pet, PetDataViewHolder>(PetDiffUtilCallback()) {
     var timerMap: MutableMap<Int, MyCountDownTimer> = mutableMapOf()
-
-    var petList: MutableList<Pet> = mutableListOf()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PetDataViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -36,11 +33,9 @@ class PetAdapter @Inject constructor(
         return PetDataViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = petList.size
-
 
     override fun onBindViewHolder(holder: PetDataViewHolder, position: Int) {
-        petList[position].let {
+        currentList[position].let {
             holder.bind(it, adapterClickHandler, timerMap)
         }
         Log.d("Tick", "onBindViewHolder: ")
@@ -62,7 +57,7 @@ class PetAdapter @Inject constructor(
 
     override fun onViewAttachedToWindow(holder: PetDataViewHolder) {
         super.onViewAttachedToWindow(holder)
-        holder.bind(petList[holder.adapterPosition], adapterClickHandler, timerMap)
+        holder.bind(currentList[holder.adapterPosition], adapterClickHandler, timerMap)
         Log.d("Tick", "onViewAttachedToWindow: $holder")
 
     }
@@ -111,9 +106,11 @@ class PetDataViewHolder @Inject constructor(
         adapterClickHandler: PetAdapter.AdapterClickHandler,
         timerMap: MutableMap<Int, MyCountDownTimer>
     ) {
+        Log.d("zyablya", "bind: ${pet.petName}")
         binding.pet = pet
         binding.adapterClickHandler = adapterClickHandler
         binding.timer = timer
+
 
         if (timerMap.containsKey(pet.id)) {
             //do nothing
@@ -121,7 +118,8 @@ class PetDataViewHolder @Inject constructor(
             Log.d("Tick", "bind: timer $timer")
             timerMap[pet.id] = timer
         }
-        
+
+        tvForTimer.text = getFormattedTime(pet.timeInterval)
         setListeners()
 
         binding.executePendingBindings()
@@ -139,8 +137,6 @@ class PetDataViewHolder @Inject constructor(
         timer.onTickListener = {
             Log.d("Tick", "setListeners: $it")
             tvForTimer.text = getFormattedTime(it)
-
-
         }
     }
 }

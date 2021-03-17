@@ -1,6 +1,7 @@
 package ru.kesva.feedthepet.binding
 
 import android.text.format.DateFormat
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.NumberPicker
@@ -48,9 +49,6 @@ fun TextView.textForNextFeeding(pet: Pet) {
 
 @BindingAdapter("bindTimer", "bindTextView", "bindPet")
 fun bindDataForTimerLaunch(view: View, timer: MyCountDownTimer, textView: TextView, pet: Pet) {
-    view.post {
-        textView.text = getFormattedTime(pet.timeInterval)
-    }
     val remainTime = pet.timeInFuture - System.currentTimeMillis()
     if (remainTime > 0) {
         timer.start(remainTime)
