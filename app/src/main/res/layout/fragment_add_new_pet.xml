@@ -20,7 +20,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/petImage"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintTop_toTopOf="parent"
@@ -35,7 +35,7 @@
                 android:hint="@string/hint_pet_name"
                 android:imeOptions="actionDone"
                 android:inputType="textCapWords"
-                android:maxLength="80"
+                android:maxLength="22"
                 android:maxLines="1"
                 android:text="@{pet.petName}"
                 app:layout_constraintBottom_toTopOf="@+id/tv_choose_time_for_feed"

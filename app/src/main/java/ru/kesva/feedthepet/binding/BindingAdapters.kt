@@ -1,7 +1,6 @@
 package ru.kesva.feedthepet.binding
 
 import android.text.format.DateFormat
-import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
@@ -14,7 +13,6 @@ import com.bumptech.glide.request.RequestOptions
 import ru.kesva.feedthepet.*
 import ru.kesva.feedthepet.domain.model.Pet
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
 
 @BindingAdapter("loadImage")
@@ -53,11 +51,25 @@ fun TextView.textForNextFeeding(pet: Pet) {
 
 }
 
+@BindingAdapter("bindPetNameTextView")
+fun textForPetName(view: View, petName: TextView) {
+    TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
+        petName, 15, 24, 1, TypedValue.COMPLEX_UNIT_DIP
+    )
+}
 @BindingAdapter("bindTimer", "bindTextView", "bindPet")
 fun bindDataForTimerLaunch(view: View, timer: MyCountDownTimer, textView: TextView, pet: Pet) {
     val remainTime = pet.timeInFuture - System.currentTimeMillis()
     if (remainTime > 0) {
         timer.start(remainTime)
+    }
+}
+
+@BindingAdapter("timeBeforeFeeding")
+fun TextView.timeBeforeFeeding(pet: Pet) {
+    val time = (pet.timeInFuture - System.currentTimeMillis()).toInt()
+    if (time <= 0) {
+        text = context.getString(R.string.interval)
     }
 }
 

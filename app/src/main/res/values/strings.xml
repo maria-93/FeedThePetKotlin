@@ -2,6 +2,7 @@
     <string name="app_name">Покорми питомца</string>
     <string name="pet_fed">Питомец накормлен</string>
     <string name="time_before_feeding">Осталось:</string>
+    <string name="interval">Интервал</string>
     <string name="fake_time">01:32</string>
 
     <string name="hint_pet_name">Введите имя питомца</string>

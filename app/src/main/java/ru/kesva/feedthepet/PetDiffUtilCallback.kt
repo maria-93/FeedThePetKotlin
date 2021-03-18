@@ -12,5 +12,6 @@ class PetDiffUtilCallback() : DiffUtil.ItemCallback<Pet>() {
     override fun areContentsTheSame(oldItem: Pet, newItem: Pet): Boolean {
         return oldItem.petName == newItem.petName && oldItem.timeInterval == newItem.timeInterval
                 && oldItem.timeInFuture == newItem.timeInFuture
+                && oldItem.petImageURI == newItem.petImageURI
     }
 }

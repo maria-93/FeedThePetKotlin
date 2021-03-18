@@ -3,6 +3,7 @@
     <string name="app_name">Feed the pet</string>
     <string name="pet_fed">Pet is fed</string>
     <string name="time_before_feeding">Time left:</string>
+    <string name="interval">Interval</string>
     <string name="fake_time">01:32</string>
 
     <string name="hint_pet_name">Enter the pet name</string>
