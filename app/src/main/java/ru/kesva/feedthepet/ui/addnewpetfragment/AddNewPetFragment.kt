@@ -79,15 +79,15 @@ class AddNewPetFragment : Fragment() {
             if (name.isEmpty()) {
                 showToastPetNameEmpty()
             } else {
-                val daysInPicker = pickerForDays.value
-                val hoursInPicker = pickerForHours.value
-                val minutesInPicker = pickerForMinutes.value
+                val daysInPicker = pickerForDays.value.toLong()
+                val hoursInPicker = pickerForHours.value.toLong()
+                val minutesInPicker = pickerForMinutes.value.toLong()
 
                 val daysInMs = daysToMs(daysInPicker)
                 val hoursInMs = hoursToMs(hoursInPicker)
                 val minutesInMs = minutesToMs(minutesInPicker)
 
-                if (daysInPicker == 0 && hoursInPicker == 0 && minutesInPicker == 0) {
+                if (daysInPicker == 0L && hoursInPicker == 0L && minutesInPicker == 0L) {
                     showToastTimeMustBeAboveZero()
                 } else {
                     buffer.pet.petName = name

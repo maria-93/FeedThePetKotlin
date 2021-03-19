@@ -68,8 +68,10 @@ fun bindDataForTimerLaunch(view: View, timer: MyCountDownTimer, textView: TextVi
 @BindingAdapter("timeBeforeFeeding")
 fun TextView.timeBeforeFeeding(pet: Pet) {
     val time = (pet.timeInFuture - System.currentTimeMillis()).toInt()
-    if (time <= 0) {
-        text = context.getString(R.string.interval)
+    text = if (time <= 0) {
+        context.getString(R.string.interval)
+    } else {
+        context.getString(R.string.time_before_feeding)
     }
 }
 

@@ -7,11 +7,11 @@ class UtilsKtTest {
 
     @Test
     fun msToDaysTest() {
-        val milliseconds: Long = 172800000
+        val milliseconds: Long = 6652800000
 
         val result = msToDays(milliseconds)
 
-        assertThat(result).isEqualTo(2)
+        assertThat(result).isEqualTo(77)
     }
 
     @Test
@@ -34,28 +34,37 @@ class UtilsKtTest {
 
     @Test
     fun daysToMsTest() {
-        val days: Int = 2
+        val days = 25L
 
         val result = daysToMs(days)
 
-        assertThat(result).isEqualTo(172800000)
+        assertThat(result).isEqualTo(2160000000)
+    }
+
+    @Test
+    fun hoursToMsTest() {
+        val hours = 23L
+
+        val result = hoursToMs(hours)
+
+        assertThat(result).isEqualTo(82800000)
     }
 
     @Test
     fun minutesToMsTest() {
-        val minutes = 5
+        val minutes = 59L
 
         val result = minutesToMs(minutes)
 
-        assertThat(result).isEqualTo(300000)
+        assertThat(result).isEqualTo(3540000)
     }
 
     @Test
     fun secondsToMsTest() {
-        val seconds = 5
+        val seconds = 59L
 
         val result = secondsToMs(seconds)
 
-        assertThat(result).isEqualTo(5000)
+        assertThat(result).isEqualTo(59000)
     }
 }

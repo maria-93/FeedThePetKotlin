@@ -2,6 +2,7 @@ package ru.kesva.feedthepet
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import java.util.*
 
@@ -17,39 +18,42 @@ fun hideKeyBoard(activity: Activity) {
         throw UnsupportedOperationException("Can't show keyboard. Activity's window is null")
     }
 }
-
-fun daysToMs(days: Int): Long {
+//провален
+fun daysToMs(days: Long): Long {
     return hoursToMs(days * 24)
 }
 
-fun hoursToMs(hours: Int): Long {
+fun hoursToMs(hours: Long): Long {
     return minutesToMs(hours * 60)
 }
 
-fun minutesToMs(minutes: Int): Long {
+fun minutesToMs(minutes: Long): Long {
     return secondsToMs(minutes * 60)
 }
 
-fun secondsToMs(seconds: Int): Long {
+fun secondsToMs(seconds: Long): Long {
     return (seconds * 1000).toLong()
 }
 
 fun msToDays(milliseconds: Long): Int {
-    return (milliseconds / (1000 * 60 * 60 * 24)).toInt()
+    val days = (milliseconds / (1000 * 60 * 60 * 24))
+    return days.toInt()
 }
 
 fun msToHours(milliseconds: Long): Int {
-    return ((milliseconds / (1000 * 60 * 60)) % 24).toInt()
+    val hours = ((milliseconds / (1000 * 60 * 60)) % 24)
+    return hours.toInt()
 }
 
 fun msToMinutes(milliseconds: Long): Int {
-    return ((milliseconds / (1000 * 60)) % 60).toInt()
+    val minutes = ((milliseconds / (1000 * 60)) % 60)
+    return minutes.toInt()
 }
 
 fun getFormattedTime(timeInterval: Long): String {
-    val minutes = ((timeInterval / (1000 * 60)) % 60).toInt()
-    val hours = ((timeInterval / (1000 * 60 * 60)) % 24).toInt()
-    val days = (timeInterval / (1000 * 60 * 60 * 24)).toInt()
+    val minutes = ((timeInterval / (1000 * 60)) % 60)
+    val hours = ((timeInterval / (1000 * 60 * 60)) % 24)
+    val days = (timeInterval / (1000 * 60 * 60 * 24))
     val locale = Locale.getDefault()
 
     when {
