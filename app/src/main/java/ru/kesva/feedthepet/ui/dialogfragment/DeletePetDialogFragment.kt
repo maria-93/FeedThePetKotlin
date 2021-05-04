@@ -22,12 +22,12 @@ class DeletePetDialogFragment : AppCompatDialogFragment() {
         val pet = viewModel.alertDialogInitiated.value?.peekContent()
         val builder = AlertDialog.Builder(activity, R.style.AlertDialogCustom)
         builder
-            .setTitle("Внимание!")
-            .setMessage("Удалить питомца?")
-            .setPositiveButton("Да") { _: DialogInterface, _: Int ->
+            .setTitle(resources.getString(R.string.dialog_title))
+            .setMessage(resources.getString(R.string.dialog_message))
+            .setPositiveButton(resources.getString(R.string.positive_button_text)) { _: DialogInterface, _: Int ->
                 viewModel.positiveButtonClick(pet!!)
             }
-            .setNegativeButton("Нет", null)
+            .setNegativeButton(resources.getString(R.string.negative_button_text), null)
 
         return builder.create()
     }

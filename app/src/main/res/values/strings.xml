@@ -23,5 +23,10 @@
     <string name="toast_alarm_launched">Будильник запущен</string>
     <string name="toast_alarm_stopped">Будильник остановлен</string>
 
+    <string name="dialog_title">Внимание!</string>
+    <string name="dialog_message">Удалить питомца?</string>
+    <string name="positive_button_text">Да</string>
+    <string name="negative_button_text">Нет</string>
+
 
 </resources>
